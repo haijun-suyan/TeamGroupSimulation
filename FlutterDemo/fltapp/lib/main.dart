@@ -1,11 +1,26 @@
+// MaterialDesign库
 import 'package:flutter/material.dart';
-//dart入口函数
+//ios样式Widget(某些定制化独特风格)：Cupertino库
+import 'package:flutter/cupertino.dart';
+//更基本Widget：Widgets集
+import 'package:flutter/widgets.dart';
+//导入自定义的Widget插件类：SW插件类
+//备注：无论多少导入命令，Dart只会导入应用中真正使用的widget(有态SW插件/无态普通SW插件/无态特殊SW插件)
+//抽象类：基本通用的框架容器(外层包裹容器)
+//具体类：具体研究方向下的内容构造器(内层内容构造器)
+//从应用角度而言，抽象类呈现出什么效果取决于置入什么具体类(类似基类和自定义类之间的多态关系)
+//SW插件若直接持有本身实例>本身直接重构build事件
+//SW插件若间接持有子类实例>子类间接重构build事件
+
+//dart入口函数(仅单次执行)
 void main() {
   //Dart日志函数
-  print('沿海家庄佩云');
   runApp(const MyApp());
 }
 
+//内容数据资源
+//MyApp 特殊的无态SW插件 类(构造器) (仅单次执行(应用刚启动时执行1次))
+//(自定义)MyApp特殊的无态SW插件 集成类 > (自定义)无态 SW插件实例
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
@@ -16,112 +31,124 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: '庄佩云',
       theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // TRY THIS: Try running your application with "flutter run". You'll see
-        // the application has a blue toolbar. Then, without quitting the app,
-        // try changing the seedColor in the colorScheme below to Colors.green
-        // and then invoke "hot reload" (save your changes or press the "hot
-        // reload" button in a Flutter-supported IDE, or press "r" if you used
-        // the command line to start the app).
-        //
-        // Notice that the counter didn't reset back to zero; the application
-        // state is not lost during the reload. To reset the state, use hot
-        // restart instead.
-        //
-        // This works for code too, not just values: Most code changes can be
-        // tested with just a hot reload.
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.pink),
+        //数据源
+        colorScheme: ColorScheme.fromSeed(
+            seedColor: Colors.pink, inversePrimary: Colors.orange),
         useMaterial3: true,
       ),
-      home: const MyHomePage(title: 'Flutter u海军 Home Page'),
+      home: const MyHomePage(title: 'FlutterHomePage'),
     );
   }
 }
 
+//(界面)有态SW插件 类(构造器)
+//有态SW插件类
+//(界面)直接关联的有态SW插件实例
+//插件StatefulWidget类
+//MyHomePage/_MyHomePageState本质上属于子有态SW插件类
+//StatefulWidget有态SW插件类 系统层
+//MyHomePage   有态SW插件类 自定义层一级类
+//_MyHomePageState  有态SW插件类 自定义二级层
 class MyHomePage extends StatefulWidget {
+
   const MyHomePage({super.key, required this.title});
 
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
-
+  //公用的待配置公开属性的声明
   final String title;
 
+  //State<MyHomePage> createState()状态对象
+  // _MyHomePageState createState() => _MyHomePageState();
+  //在插件树中某个给定的位置为该插件创建可变状态对象
+  //多态概念
+  //<MyHomePage>泛型概念 <T extends StatefulWidget>
+  //State<MyHomePage> 状态包裹下的MyHomePage类
+  //State<MyHomePage> createState() 管控着MyHomePage类的状态容器
+  //_MyHomePageState子类构造器中重写build事件以返回有效关联的状态有态SW插件子类对应的有态SW插件新实例
+  //通过状态容器管控机制促使MyHomePage类多态持有着_MyHomePageState类实例(有态SW插件实例)
   @override
   State<MyHomePage> createState() => _MyHomePageState();
+
 }
 
+//视图渲染所在的结构实例
+//类 级 构造器
+//(自定义)状态子有态SW插件类 实例(体)
+//引用码setState命令处于重构build事件所在的有态SW插件类 构造器
+//Scaffold插件实例(整个界面的底跟插件实例)
+//过渡层(具体内容的插件实例)
+//状态 子 有态SW插件类
+//_MyHomePageState  有态SW插件类 自定义层二级类
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
 
-
-
   @override
-  //重构插件编译build事件实例(系统自动触发)
+  //状态SW插件子类的本身执行区中重构插件编译build事件实例(系统自动触发)
   Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
+    // 当执行引用setState的坑回调事件内的回调指令码后重新执行编译build事件(引用码setState命令所处于的有态SW插件类中的成员变量内存区访问不变(所处于的SW插件类中的成员变量的声明初始化命令码不会再次执行)(仅再次执行bulid事件))
+    // 渲染层逻辑
+    //Column 布局插件(水平:内容自动膨化 垂直:由上而下)
+    //$ ‘’转义符
+    //渲染有关的Scaffold渲染插件实例(整个界面的底跟插件实例)
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
         title: Text(widget.title),
       ),
       body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
         child: Column(
-          // Column is also a layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
-          //
-          // TRY THIS: Invoke "debug painting" (choose the "Toggle Debug Paint"
-          // action in the IDE, or press "p" in the console), to see the
-          // wireframe for each widget.
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             const Text(
-              'You have pushed the button this many times:',
+              '点按插件按钮次数:',
             ),
             Text(
               '$_counter',
               style: Theme.of(context).textTheme.headlineMedium,
             ),
+            CustomCard(index:_counter,onPress:(){
+              print('登录');
+            }),
           ],
         ),
       ),
-       // This trailing comma makes auto-formatting nicer for build methods.
+      floatingActionButton: FloatingActionButton(
+        onPressed: _incrementCounter,
+        tooltip: 'Increment',
+        child: const Icon(Icons.add),
+      ),
     );
   }
 
+  //函数级构造器(级别低于类级别)
   void _incrementCounter() {
+    //(setState状态写入事件)引用码更改状态环境：执行引用setState的坑回调事件内的回调指令码后重运行同类结构中的编译bulid事件的渲染命令界面渲染的更新
     setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
       _counter++;
-      print('sssssss');
     });
   }
 
+}
+
+//构造器类(组件)
+//(自定义)插件 集成类 > (自定义)插件 实例
+//StatelessWidget(常规型)无态SW插件>充当子层插件(上层内嵌插件)>未直接关联状态
+class CustomCard extends StatelessWidget {
+  //自调用(Self)
+  CustomCard({@required this.index,this.onPress});
+  final index;
+  //void Function()? 事件本身所遵循的结构特征
+  final void Function()? onPress;
+
+  @override
+  //生产编码
+  Widget build(BuildContext context) {
+    return Card(
+      child: TextButton(
+        autofocus: true,
+        onPressed: onPress,
+        child: const Text('登录'),
+      ),
+    );
+  }
 
 }
