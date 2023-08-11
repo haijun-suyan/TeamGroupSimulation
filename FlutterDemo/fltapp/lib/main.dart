@@ -134,13 +134,14 @@ class _MyHomePageState extends State<MyHomePage> {
 //StatelessWidget(常规型)无态SW插件>充当子层插件(上层内嵌插件)>未直接关联状态
 class CustomCard extends StatelessWidget {
   //自调用(Self)
+  //(自定义)待配置公开属性默认可选
   CustomCard({@required this.index,this.onPress});
   final index;
   //void Function()? 事件本身所遵循的结构特征
   final void Function()? onPress;
 
-  @override
   //生产编码
+  @override
   Widget build(BuildContext context) {
     return Card(
       child: TextButton(
