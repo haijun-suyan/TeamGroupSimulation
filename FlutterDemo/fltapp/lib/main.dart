@@ -4,6 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 //更基本Widget：Widgets集
 import 'package:flutter/widgets.dart';
+import 'dart:async' show Future;
+import 'package:english_words/english_words.dart';
+import 'package:transparent_image/transparent_image.dart';
+
+import 'package:flutter/services.dart' show rootBundle;
 //导入自定义的Widget插件类：SW插件类
 //备注：无论多少导入命令，Dart只会导入应用中真正使用的widget(有态SW插件/无态普通SW插件/无态特殊SW插件)
 //抽象类：基本通用的框架容器(外层包裹容器)
@@ -11,6 +16,10 @@ import 'package:flutter/widgets.dart';
 //从应用角度而言，抽象类呈现出什么效果取决于置入什么具体类(类似基类和自定义类之间的多态关系)
 //SW插件若直接持有本身实例>本身直接重构build事件
 //SW插件若间接持有子类实例>子类间接重构build事件
+//SingleChildScrollView滚动性插件作过渡层
+//Container容器辅助性插件过渡层(特定业务场景下 需手动限定布局 绘制特性、定位、尺寸范围)
+//FadeInImage.assetNetwork 加载网络图片(占位图) 系统 功能弱
+//FadeInImage.memoryNetwork 加载网络图片(占位图) 三方开源库 功能强 容错性高
 
 //dart入口函数(仅单次执行)
 void main() {
@@ -80,6 +89,8 @@ class MyHomePage extends StatefulWidget {
 //_MyHomePageState  有态SW插件类 自定义层二级类
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
+  //_wordPair.asPascalCase 随机生成的字符串实例
+  final _wordPair = WordPair.random();
 
   @override
   //状态SW插件子类的本身执行区中重构插件编译build事件实例(系统自动触发)
@@ -90,25 +101,27 @@ class _MyHomePageState extends State<MyHomePage> {
     //$ ‘’转义符
     //渲染有关的Scaffold渲染插件实例(整个界面的底跟插件实例)
     return Scaffold(
+      resizeToAvoidBottomInset: true,
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: Text(widget.title),
       ),
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              '点按插件按钮次数:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
-            CustomCard(index:_counter,onPress:(){
-              print('登录');
-            }),
-          ],
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              const Text(
+                '点按插件按钮次数:',
+              ),
+              Text(_wordPair.asPascalCase),
+              CustomCard(
+                  index: _counter,
+                  onPress: () {
+                    print('登录');
+                  }),
+            ],
+          ),
         ),
       ),
       floatingActionButton: FloatingActionButton(
@@ -135,7 +148,7 @@ class _MyHomePageState extends State<MyHomePage> {
 class CustomCard extends StatelessWidget {
   //自调用(Self)
   //(自定义)待配置公开属性默认可选
-  CustomCard({@required this.index,this.onPress});
+  CustomCard({@required this.index, this.onPress});
   final index;
   //void Function()? 事件本身所遵循的结构特征
   final void Function()? onPress;
@@ -144,12 +157,87 @@ class CustomCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      child: TextButton(
-        autofocus: true,
-        onPressed: onPress,
-        child: const Text('登录'),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          TextButton(
+            autofocus: true,
+            onPressed: onPress,
+            child: const Text('登录'),
+          ),
+          Container(
+            width: 200,
+            height: 150,
+            color: Colors.yellow,
+            child: const Image(
+              image: AssetImage('lib/src/images/flower_pink.png'),//加载本地资源图
+              fit: BoxFit.fill,
+            ),
+          ),
+          Container(
+            width: 300,
+            height: 200,
+            color: Colors.yellow,
+            child: const Image(
+              image: AssetImage('lib/src/images/a_dot_burr.png'),//加载本地资源图
+              fit: BoxFit.fill,
+            ),
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              Container(
+                width: 100,
+                height: 100,
+                color: Colors.yellow,
+                child: Image.asset('lib/src/assets/dark_cycle/dark_cycle.png'),//加载本地资源图
+              ),
+              Container(
+                width: 100,
+                height: 100,
+                color: Colors.yellow,
+                child: const Image(
+                  image: AssetImage(
+                      'lib/src/assets/lover_kiss.png.dataset/lover_kiss.png'),//加载本地资源图
+                  fit: BoxFit.fill,
+                ),
+              ),
+            ],
+          ),
+          const Image(
+            image: AssetImage('lib/src/images/lovers_cartn.png'),//加载本地资源图
+            fit: BoxFit.fill,
+          ),
+          Image.network(
+              'https://img2.baidu.com/it/u=330301312,2796288823&fm=253&fmt=auto&app=138&f=JPEG?w=800&h=500'),//加载网图
+          FadeInImage.assetNetwork(
+            image:
+                'https://img0.baidu.com/it/u=1162172507,1840715665&fm=253&fmt=auto&app=120&f=JPEG?w=1280&h=800',
+            placeholder: 'lib/src/images/girl_cute.png',
+            fit: BoxFit.fill,
+          ),//加载网图
+          FadeInImage.memoryNetwork(
+            placeholder: kTransparentImage,
+            image:
+                'http://tiebapic.baidu.com/forum/w%3D580/sign=a96ca741eafaaf5184e381b7bc5594ed/7ea6a61ea8d3fd1f2643ad5d274e251f95ca5f38.jpg',
+          ),//加载网图
+          FadeInImage.assetNetwork(
+            image: 'https://img1.baidu.com/it/u=160173892,1626382670&fm=253&fmt=auto&app=120&f=JPEG?w=1280&h=800',
+            placeholder: 'lib/src/images/girl_cute.png',
+            fit: BoxFit.fill,
+          ),//加载网图
+          FadeInImage.memoryNetwork(
+            placeholder: kTransparentImage,
+            image:
+            'https://img0.baidu.com/it/u=1435639120,2241364006&fm=253&fmt=auto&app=138&f=JPEG?w=800&h=500',
+          ),//加载网图
+        ],
       ),
     );
   }
 
+  // Future<String> loadAsset() async {
+  //   return await rootBundle
+  //       .loadString('lib/src/assets/lover_kiss.png.dataset/lover_kiss.json');
+  // }
 }
