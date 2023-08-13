@@ -34,7 +34,15 @@ dependencies:
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
+  # 三方开源包依赖配置
+  # ios样式Widget(某些定制化独特风格)：Cupertino库(三方开源包)
   cupertino_icons: ^1.0.2
+  # english_words三方开源包(英文词库)
+  english_words: ^4.0.0
+  # transparent_image三方开源包(占位透明图 图片加载库)
+  transparent_image: ^2.0.0
+
+
 
 dev_dependencies:
   flutter_test:
@@ -58,10 +66,16 @@ flutter:
   # the material Icons class.
   uses-material-design: true
 
-  # To add assets to your application, add an assets section, like this:
-  # assets:
-  #   - images/a_dot_burr.jpeg
-  #   - images/a_dot_ham.jpeg
+  # To add assets to your application, add an assets section, like this
+  # lib/src/images/flower_pink.png本地资源图 配置 访问相对路径
+  assets:
+     - lib/src/images/flower_pink.png
+     - lib/src/images/a_dot_burr.png
+     - lib/src/images/lovers_cartn.png
+     - lib/src/images/girl_buty.png
+     - lib/src/images/girl_cute.png
+     - lib/src/assets/dark_cycle/dark_cycle.png
+     - lib/src/assets/lover_kiss.png.dataset/lover_kiss.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
