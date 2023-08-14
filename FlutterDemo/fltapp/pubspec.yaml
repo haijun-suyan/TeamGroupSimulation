@@ -76,6 +76,7 @@ flutter:
      - lib/src/images/girl_cute.png
      - lib/src/assets/dark_cycle/dark_cycle.png
      - lib/src/assets/lover_kiss.png.dataset/lover_kiss.png
+     - lib/src/assets/lover_kiss.png.dataset/lover_kiss.json
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

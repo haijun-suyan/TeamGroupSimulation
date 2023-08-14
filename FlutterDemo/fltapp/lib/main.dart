@@ -1,14 +1,15 @@
 // MaterialDesign库
 import 'package:flutter/material.dart';
-//ios样式Widget(某些定制化独特风格)：Cupertino库
-import 'package:flutter/cupertino.dart';
 //更基本Widget：Widgets集
 import 'package:flutter/widgets.dart';
 import 'dart:async' show Future;
+import 'package:flutter/services.dart' show rootBundle;
+
+//ios样式Widget(某些定制化独特风格)：Cupertino库
+import 'package:flutter/cupertino.dart';
 import 'package:english_words/english_words.dart';
 import 'package:transparent_image/transparent_image.dart';
 
-import 'package:flutter/services.dart' show rootBundle;
 //导入自定义的Widget插件类：SW插件类
 //备注：无论多少导入命令，Dart只会导入应用中真正使用的widget(有态SW插件/无态普通SW插件/无态特殊SW插件)
 //抽象类：基本通用的框架容器(外层包裹容器)
@@ -20,6 +21,8 @@ import 'package:flutter/services.dart' show rootBundle;
 //Container容器辅助性插件过渡层(特定业务场景下 需手动限定布局 绘制特性、定位、尺寸范围)
 //FadeInImage.assetNetwork 加载网络图片(占位图) 系统 功能弱
 //FadeInImage.memoryNetwork 加载网络图片(占位图) 三方开源库 功能强 容错性高
+//原本iOS/Android资源图转入Flutter项目本身二方库内
+//device pixel ratio 设备像素比(物理像素/逻辑像素)
 
 //dart入口函数(仅单次执行)
 void main() {
@@ -236,8 +239,7 @@ class CustomCard extends StatelessWidget {
     );
   }
 
-  // Future<String> loadAsset() async {
-  //   return await rootBundle
-  //       .loadString('lib/src/assets/lover_kiss.png.dataset/lover_kiss.json');
-  // }
+  Future<String> loadAsset() async {
+    return await rootBundle.loadString('lib/src/assets/lover_kiss.png.dataset/lover_kiss.json');
+  }
 }
