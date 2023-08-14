@@ -48,7 +48,7 @@ class MyApp extends StatelessWidget {
             seedColor: Colors.pink, inversePrimary: Colors.orange),
         useMaterial3: true,
       ),
-      home: const MyHomePage(title: 'FlutterHomePage'),
+      home: const MyHomePage(title: Strings.welcomeMessage),
     );
   }
 }
@@ -173,7 +173,7 @@ class CustomCard extends StatelessWidget {
             height: 150,
             color: Colors.yellow,
             child: const Image(
-              image: AssetImage('lib/src/images/flower_pink.png'),//加载本地资源图
+              image: AssetImage('lib/src/images/a_dot_burr/a_dot_burr.png'),//加载本地资源图
               fit: BoxFit.fill,
             ),
           ),
@@ -182,7 +182,7 @@ class CustomCard extends StatelessWidget {
             height: 200,
             color: Colors.yellow,
             child: const Image(
-              image: AssetImage('lib/src/images/a_dot_burr.png'),//加载本地资源图
+              image: AssetImage('lib/src/images/a_dot_burr/a_dot_burr.png'),//加载本地资源图
               fit: BoxFit.fill,
             ),
           ),
@@ -208,7 +208,7 @@ class CustomCard extends StatelessWidget {
             ],
           ),
           const Image(
-            image: AssetImage('lib/src/images/lovers_cartn.png'),//加载本地资源图
+            image: AssetImage('lib/src/images/lovers_cartn/lovers_cartn.png'),//加载本地资源图
             fit: BoxFit.fill,
           ),
           Image.network(
@@ -216,7 +216,7 @@ class CustomCard extends StatelessWidget {
           FadeInImage.assetNetwork(
             image:
                 'https://img0.baidu.com/it/u=1162172507,1840715665&fm=253&fmt=auto&app=120&f=JPEG?w=1280&h=800',
-            placeholder: 'lib/src/images/girl_cute.png',
+            placeholder: 'lib/src/images/girl_cute/girl_cute.png',
             fit: BoxFit.fill,
           ),//加载网图
           FadeInImage.memoryNetwork(
@@ -243,3 +243,13 @@ class CustomCard extends StatelessWidget {
     return await rootBundle.loadString('lib/src/assets/lover_kiss.png.dataset/lover_kiss.json');
   }
 }
+
+//(基)类 字符串资源
+class Strings  {
+  //静态字段app_name
+  static const String app_name = 'Flutter Demo';
+  //静态字段welcomeMessage
+  static const String welcomeMessage = 'FlutterHomePage';
+}
+
+
