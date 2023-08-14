@@ -1,15 +1,17 @@
 {
   "images" : [
     {
+      "filename" : "dark_cycle@1.0x.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "dark_cycle.png",
+      "filename" : "dark_cycle@2.0x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
+      "filename" : "dark_cycle@3.0x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

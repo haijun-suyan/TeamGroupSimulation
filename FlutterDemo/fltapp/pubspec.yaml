@@ -69,11 +69,11 @@ flutter:
   # To add assets to your application, add an assets section, like this
   # lib/src/images/flower_pink.png本地资源图 配置 访问相对路径
   assets:
-     - lib/src/images/flower_pink.png
-     - lib/src/images/a_dot_burr.png
-     - lib/src/images/lovers_cartn.png
-     - lib/src/images/girl_buty.png
-     - lib/src/images/girl_cute.png
+     - lib/src/images/flower_pink/flower_pink.png
+     - lib/src/images/a_dot_burr/a_dot_burr.png
+     - lib/src/images/lovers_cartn/lovers_cartn.png
+     - lib/src/images/girl_buty/girl_buty.png
+     - lib/src/images/girl_cute/girl_cute.png
      - lib/src/assets/dark_cycle/dark_cycle.png
      - lib/src/assets/lover_kiss.png.dataset/lover_kiss.png
      - lib/src/assets/lover_kiss.png.dataset/lover_kiss.json
