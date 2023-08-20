@@ -41,6 +41,16 @@ dependencies:
   english_words: ^4.0.0
   # transparent_image三方开源包(占位透明图 图片加载库)
   transparent_image: ^2.0.0
+  # flutter_screenutil三方开源包(屏幕适配工具)
+  google_sign_in: ^5.0.0
+
+
+
+  flutter_localizations:
+    sdk: flutter
+  # intl三方开源包(日期/时间格式化)
+  intl: ^0.18.0
+
 
 
 
