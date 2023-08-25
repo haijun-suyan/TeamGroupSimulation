@@ -20,7 +20,8 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 //从应用角度而言，抽象类呈现出什么效果取决于置入什么具体类(类似基类和自定义类之间的多态关系)
 //SW插件若直接持有本身实例>本身直接重构build事件
 //SW插件若间接持有子类实例>子类间接重构build事件
-//SingleChildScrollView滚动性插件作过渡层(滚动)scrollDirection:Axis.
+//SingleChildScrollView滚动性插件作过渡层(垂直/水平滚动)scrollDirection:Axis.
+//ListView 垂直/水平滚动
 //Container容器辅助性插件过渡层(特定业务场景下 需手动限定布局 绘制特性、定位、尺寸范围)
 //SizedBox容器辅助性插件过渡层(特定业务场景下 需手动限定布局 尺寸范围)
 //FadeInImage.assetNetwork 加载网络图片(占位图) 系统 功能弱
