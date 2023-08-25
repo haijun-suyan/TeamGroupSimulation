@@ -20,7 +20,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 //从应用角度而言，抽象类呈现出什么效果取决于置入什么具体类(类似基类和自定义类之间的多态关系)
 //SW插件若直接持有本身实例>本身直接重构build事件
 //SW插件若间接持有子类实例>子类间接重构build事件
-//SingleChildScrollView滚动性插件作过渡层(垂直滚动)
+//SingleChildScrollView滚动性插件作过渡层(滚动)scrollDirection:Axis.
 //Container容器辅助性插件过渡层(特定业务场景下 需手动限定布局 绘制特性、定位、尺寸范围)
 //SizedBox容器辅助性插件过渡层(特定业务场景下 需手动限定布局 尺寸范围)
 //FadeInImage.assetNetwork 加载网络图片(占位图) 系统 功能弱
@@ -39,6 +39,8 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 //route路由应用程序中抽象出的辅助管理器(管理着屏幕页面的活跃性)
 //绑定有路由路径(链)的插件实例可以通过所绑定的路由路径传递给MaterialApp实例(屏幕页面的切换)
 //context 整个应用生效(同个内存区) 底层自动写入(应用上层直接读取使用即可)
+//Expanded缩放插件(存在局限性(适用于少量情况))
+//Flexible弹性插件
 void main() {
   //Dart日志函数
   runApp(const MyApp());
@@ -157,6 +159,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
         child: Container(
           color: Colors.yellow,
           child: SingleChildScrollView(
+              scrollDirection: Axis.vertical,
               padding:
                   const EdgeInsets.only(left: 50, right: 50), //边际填充(内缩)(非负)
               child: Column(
@@ -242,6 +245,7 @@ class _PageAState extends State<PageA> {
         child: Container(
           color: Colors.blue,
           child: SingleChildScrollView(
+            scrollDirection: Axis.vertical,
             padding: const EdgeInsets.only(left: 50, right: 50), //边际填充(内缩)(非负)
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -330,6 +334,7 @@ class _PageBState extends State<PageB> {
         child: Container(
           color: Colors.yellow,
           child: SingleChildScrollView(
+              scrollDirection: Axis.vertical,
               padding:
                   const EdgeInsets.only(left: 50, right: 50), //边际填充(内缩)(非负)
               child: Column(
@@ -386,6 +391,20 @@ class _PageBState extends State<PageB> {
                               label: const Text('图标按钮'),
                             ),
                           ),
+                          Expanded(
+                            child: ElevatedButton.icon(
+                              onPressed: () {},
+                              icon: const Icon(Icons.account_box),
+                              label: const Text('图标按钮'),
+                            ),
+                          ),
+                          Expanded(
+                            child: ElevatedButton.icon(
+                              onPressed: () {},
+                              icon: const Icon(Icons.account_box),
+                              label: const Text('图标按钮'),
+                            ),
+                          ),
                         ]),
                       ),
                       SizedBox(
@@ -395,7 +414,8 @@ class _PageBState extends State<PageB> {
                           style: ButtonStyle(
                             shape: MaterialStateProperty.all(
                               const RoundedRectangleBorder(
-                                borderRadius: BorderRadius.all(Radius.circular(20.0)),
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(20.0)),
                               ),
                             ),
                             textStyle: MaterialStateProperty.all(
@@ -408,6 +428,254 @@ class _PageBState extends State<PageB> {
                       ),
                     ],
                   ), //按钮组
+                  SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: ButtonBar(
+                      children: [
+                        SizedBox(
+                          width: screenW * 5, //ButtonBar+SizedBox：内容尺寸
+                          child: Row(children: [
+                            Flexible(
+                              child: ConstrainedBox(
+                                constraints: const BoxConstraints(
+                                  minWidth: 100,
+                                  maxHeight: 45,
+                                ),
+                                child: ElevatedButton.icon(
+                                  onPressed: () {},
+                                  icon: const Icon(null),
+                                  label: const Text('图标??按钮'),
+                                ),
+                              ),
+                            ),
+                            Flexible(
+                              child: ConstrainedBox(
+                                constraints: const BoxConstraints(
+                                  minWidth: 100,
+                                  maxHeight: 45,
+                                ),
+                                child: ElevatedButton.icon(
+                                  onPressed: () {},
+                                  icon: const Icon(null),
+                                  label: const Text('图标??按钮'),
+                                ),
+                              ),
+                            ),
+                            Expanded(
+                              child: ConstrainedBox(
+                                constraints: const BoxConstraints(
+                                  minWidth: 100,
+                                  maxHeight: 45,
+                                ),
+                                child: ElevatedButton.icon(
+                                  onPressed: () {},
+                                  icon: const Icon(null),
+                                  label: const Text('图标??按钮'),
+                                ),
+                              ),
+                            ),
+                            Expanded(
+                              child: ConstrainedBox(
+                                constraints: const BoxConstraints(
+                                  minWidth: 100,
+                                  maxHeight: 45,
+                                ),
+                                child: ElevatedButton.icon(
+                                  onPressed: () {},
+                                  icon: const Icon(null),
+                                  label: const Text('图标??按钮'),
+                                ),
+                              ),
+                            ),
+                            Expanded(
+                              child: ConstrainedBox(
+                                constraints: const BoxConstraints(
+                                  minWidth: 100,
+                                  maxHeight: 45,
+                                ),
+                                child: ElevatedButton.icon(
+                                  onPressed: () {},
+                                  icon: const Icon(null),
+                                  label: const Text('图标??按钮'),
+                                ),
+                              ),
+                            ),
+                            Expanded(
+                              child: ConstrainedBox(
+                                constraints: const BoxConstraints(
+                                  minWidth: 100,
+                                  maxHeight: 45,
+                                ),
+                                child: ElevatedButton.icon(
+                                  onPressed: () {},
+                                  icon: const Icon(null),
+                                  label: const Text('图标??按钮'),
+                                ),
+                              ),
+                            ),
+                            Expanded(
+                              child: ConstrainedBox(
+                                constraints: const BoxConstraints(
+                                  minWidth: 100,
+                                  maxHeight: 45,
+                                ),
+                                child: ElevatedButton.icon(
+                                  onPressed: () {},
+                                  icon: const Icon(null),
+                                  label: const Text('图标??按钮'),
+                                ),
+                              ),
+                            ),
+                            Expanded(
+                              child: ConstrainedBox(
+                                constraints: const BoxConstraints(
+                                  minWidth: 80,
+                                  maxHeight: 45,
+                                ),
+                                child: ElevatedButton.icon(
+                                  onPressed: () {},
+                                  icon: const Icon(null),
+                                  label: const Text('图标??按钮'),
+                                ),
+                              ),
+                            ),
+                          ]),
+                        ),
+                      ],
+                    ),
+                  ),
+                  SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: ButtonBar(
+                      children: [
+                        SizedBox(
+                          width: 150 * 12, //ButtonBar+SizedBox：内容尺寸
+                          child: Row(children: [
+                            Flexible(
+                              child: SizedBox(
+                                width: 150,
+                                child: ElevatedButton.icon(
+                                  onPressed: () {},
+                                  icon: const Icon(null),
+                                  label: const Text('图标按钮'),
+                                ),
+                              ),
+                            ),
+                            Flexible(
+                              child: SizedBox(
+                                width: 150,
+                                child: ElevatedButton.icon(
+                                  onPressed: () {},
+                                  icon: const Icon(null),
+                                  label: const Text('图标按钮'),
+                                ),
+                              ),
+                            ),
+                            Expanded(
+                              child: SizedBox(
+                                width: 150,
+                                child: ElevatedButton.icon(
+                                  onPressed: () {},
+                                  icon: const Icon(null),
+                                  label: const Text('图标按钮'),
+                                ),
+                              ),
+                            ),
+                            Expanded(
+                              child: SizedBox(
+                                width: 150,
+                                child: ElevatedButton.icon(
+                                  onPressed: () {},
+                                  icon: const Icon(null),
+                                  label: const Text('图标按钮'),
+                                ),
+                              ),
+                            ),
+                            Expanded(
+                              child: SizedBox(
+                                width: 150,
+                                child: ElevatedButton.icon(
+                                  onPressed: () {},
+                                  icon: const Icon(null),
+                                  label: const Text('图标按钮'),
+                                ),
+                              ),
+                            ),
+                            Expanded(
+                              child: SizedBox(
+                                width: 150,
+                                child: ElevatedButton.icon(
+                                  onPressed: () {},
+                                  icon: const Icon(null),
+                                  label: const Text('图标按钮'),
+                                ),
+                              ),
+                            ),
+                            Expanded(
+                              child: SizedBox(
+                                width: 150,
+                                child: ElevatedButton.icon(
+                                  onPressed: () {},
+                                  icon: const Icon(null),
+                                  label: const Text('图标按钮'),
+                                ),
+                              ),
+                            ),
+                            Expanded(
+                              child: SizedBox(
+                                width: 150,
+                                child: ElevatedButton.icon(
+                                  onPressed: () {},
+                                  icon: const Icon(null),
+                                  label: const Text('图标按钮'),
+                                ),
+                              ),
+                            ),
+                            Expanded(
+                              child: SizedBox(
+                                width: 150,
+                                child: ElevatedButton.icon(
+                                  onPressed: () {},
+                                  icon: const Icon(null),
+                                  label: const Text('图标按钮'),
+                                ),
+                              ),
+                            ),
+                            Expanded(
+                              child: SizedBox(
+                                width: 150,
+                                child: ElevatedButton.icon(
+                                  onPressed: () {},
+                                  icon: const Icon(null),
+                                  label: const Text('图标按钮'),
+                                ),
+                              ),
+                            ),
+                            Expanded(
+                              child: SizedBox(
+                                width: 150,
+                                child: ElevatedButton.icon(
+                                  onPressed: () {},
+                                  icon: const Icon(null),
+                                  label: const Text('图标按钮'),
+                                ),
+                              ),
+                            ),
+                            Expanded(
+                              child: SizedBox(
+                                width: 150,
+                                child: ElevatedButton.icon(
+                                  onPressed: () {},
+                                  icon: const Icon(null),
+                                  label: const Text('图标按钮'),
+                                ),
+                              ),
+                            ),
+                          ]),
+                        ),
+                      ],
+                    ),
+                  ),
                   SizedBox(
                     height: 40,
                     child: OutlinedButton(
@@ -470,6 +738,7 @@ class _PageCState extends State<PageC> {
         child: Container(
           color: Colors.yellow,
           child: const SingleChildScrollView(
+              scrollDirection: Axis.vertical,
               padding: EdgeInsets.only(left: 50, right: 50), //边际填充(内缩)(非负)
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -512,6 +781,7 @@ class CustomCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       child: SingleChildScrollView(
+        scrollDirection: Axis.vertical,
         padding: const EdgeInsets.only(left: 50, right: 50), //边际填充(内缩)(非负)
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -615,6 +885,7 @@ class SSSSSCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       child: SingleChildScrollView(
+          scrollDirection: Axis.vertical,
           padding: const EdgeInsets.only(left: 50, right: 50), //边际填充(内缩)(非负)
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
