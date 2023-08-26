@@ -18,6 +18,9 @@ import 'custom/pageA.dart';
 import 'custom/pageB.dart';
 import 'custom/pageC.dart';
 
+//响应式开发特性：1.API调用 2.渲染快速重载
+//渲染快速重载(受到设备本身CPU性能的影响)只在项目较小并处于简单的测试玩耍时生效，其余时候快速重载可能会失效(只能采用编译重启机制)
+//flutter项目 main.dart文件内进行编码的修改及首页title修改自动重载，其余dart文件内的编码改动重载失效(CPU性能不支持/只能采取重启)(重载适合于较小demo项目)
 //导入自定义的Widget插件类：SW插件类
 //备注：无论多少导入命令，Dart只会导入应用中真正使用的widget(有态SW插件/无态普通SW插件/无态特殊SW插件)
 //抽象类：基本通用的框架容器(外层包裹容器)
@@ -47,6 +50,8 @@ import 'custom/pageC.dart';
 //context 整个应用生效(同个内存区) 底层自动写入(应用上层直接读取使用即可)
 //Expanded缩放插件(存在局限性(适用于少量情况))
 //Flexible弹性插件
+//1 元类规则区(栈):多 内容堆区
+//
 void main() {
   //Dart日志函数
   runApp(const MyApp());
