@@ -70,7 +70,7 @@ class _PageCState extends State<PageC> {
   //函数级构造器(级别低于类级别)
   void _nextPage() {
     //正式的执行路由跳转
-    Navigator.of(context).pushNamed('/a');
+    Navigator.of(context).pushNamed('/d');
     //(setState状态写入事件)引用码更改状态环境：执行引用setState的坑回调事件内的回调指令码后重运行同类结构中的编译bulid事件的渲染命令界面渲染的更新
     //当前界面整体的渲染更新
     // setState(() {

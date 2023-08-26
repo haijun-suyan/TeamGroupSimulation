@@ -17,6 +17,7 @@ import 'custom/MyHomePage.dart';
 import 'custom/pageA.dart';
 import 'custom/pageB.dart';
 import 'custom/pageC.dart';
+import 'custom/pageD.dart';
 
 //响应式开发特性：1.API调用 2.渲染快速重载
 //渲染快速重载(受到设备本身CPU性能的影响)只在项目较小并处于简单的测试玩耍时生效，其余时候快速重载可能会失效(只能采用编译重启机制)
@@ -87,11 +88,13 @@ class MyApp extends StatelessWidget {
         home: const MyHomePage(title: Strings.welcomeMessage),
         routes: <String, WidgetBuilder>{
           //路由元素a
-          '/a': (BuildContext context) => const PageA(title: 'pageA'),
+          '/a': (BuildContext context) => const PageA(title: '图加载'),
           //路由元素b
-          '/b': (BuildContext context) => const PageB(title: 'pageB'),
+          '/b': (BuildContext context) => const PageB(title: 'Button按钮插件'),
           //路由元素c
-          '/c': (BuildContext context) => const PageC(title: 'pageC')
+          '/c': (BuildContext context) => const PageC(title: 'pageC'),
+          //路由元素d
+          '/d': (BuildContext context) => const PageD(title: 'ListView表视图')
         });
   }
 }
