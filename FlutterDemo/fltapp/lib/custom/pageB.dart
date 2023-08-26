@@ -398,7 +398,7 @@ class _PageBState extends State<PageB> {
                     ),
                   ),
                   SizedBox(
-                    height: 40,
+                    height: 80,
                     child: OutlinedButton(
                       onPressed: _nextPage,
                       style: ButtonStyle(
@@ -407,7 +407,7 @@ class _PageBState extends State<PageB> {
                         textStyle: MaterialStateProperty.all(const TextStyle(
                             backgroundColor: Colors.transparent, fontSize: 17)),
                       ),
-                      child: const Text('圆环 下一页'),
+                      child: const Text('圆环'),
                     ), //线框按钮
                   ),
                 ],

@@ -39,33 +39,41 @@ class _PageCState extends State<PageC> {
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: Text(widget.title),
       ),
-      body: Center(
-        child: Container(
-          color: Colors.yellow,
-          child: const SingleChildScrollView(
-              scrollDirection: Axis.vertical,
-              padding: EdgeInsets.only(left: 50, right: 50), //边际填充(内缩)(非负)
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Text(
-                    '欢迎来到C界面',
-                  ),
-                ],
-              )),
-        ),
+      body: Container(
+        color: Colors.yellow,
+        child: SingleChildScrollView(
+            scrollDirection: Axis.vertical,
+            padding: const EdgeInsets.only(left: 0, right: 50), //边际填充(内缩)(非负)
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: <Widget>[
+                const Text(
+                  '欢迎来到C界面',
+                  style: TextStyle(fontSize: 17),
+                  textAlign: TextAlign.left,
+                ),
+                ElevatedButton(
+                  onPressed: _nextPage,
+                  style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all(Colors.red),
+                      foregroundColor: MaterialStateProperty.all(Colors.white),
+                      elevation: MaterialStateProperty.all(50) //阴影
+                      ),
+                  child: const Text('阴影按钮'),
+                ),
+              ],
+            )),
       ),
     );
   }
 
   //函数级构造器(级别低于类级别)
   void _nextPage() {
+    //正式的执行路由跳转
+    Navigator.of(context).pushNamed('/a');
     //(setState状态写入事件)引用码更改状态环境：执行引用setState的坑回调事件内的回调指令码后重运行同类结构中的编译bulid事件的渲染命令界面渲染的更新
+    //当前界面整体的渲染更新
     // setState(() {
-    //   Navigator.of(context).pushNamed('/a');
-    //   _counter++;
-    //   controller.forward();
     // });
-    setState(() {});
   }
 }
