@@ -73,6 +73,7 @@ class _PageAState extends State<PageA> {
                   '欢迎来到A界面',
                   style: TextStyle(fontSize: 17),
                 ),
+                const Text('SingleChildScrollView垂直滚动'),
                 CustomCard(
                     index: 1,
                     onPress: () {
@@ -183,25 +184,25 @@ class CustomCard extends StatelessWidget {
                 'https://img2.baidu.com/it/u=330301312,2796288823&fm=253&fmt=auto&app=138&f=JPEG?w=800&h=500'), //加载网图
             FadeInImage.assetNetwork(
               image:
-              'https://img0.baidu.com/it/u=1162172507,1840715665&fm=253&fmt=auto&app=120&f=JPEG?w=1280&h=800',
+                  'https://img0.baidu.com/it/u=1162172507,1840715665&fm=253&fmt=auto&app=120&f=JPEG?w=1280&h=800',
               placeholder: 'lib/src/images/girl_cute/girl_cute.png',
               fit: BoxFit.fill,
             ), //加载网图
             FadeInImage.memoryNetwork(
               placeholder: kTransparentImage,
               image:
-              'http://tiebapic.baidu.com/forum/w%3D580/sign=a96ca741eafaaf5184e381b7bc5594ed/7ea6a61ea8d3fd1f2643ad5d274e251f95ca5f38.jpg',
+                  'http://tiebapic.baidu.com/forum/w%3D580/sign=a96ca741eafaaf5184e381b7bc5594ed/7ea6a61ea8d3fd1f2643ad5d274e251f95ca5f38.jpg',
             ), //加载网图
             FadeInImage.assetNetwork(
               image:
-              'https://img1.baidu.com/it/u=160173892,1626382670&fm=253&fmt=auto&app=120&f=JPEG?w=1280&h=800',
+                  'https://img1.baidu.com/it/u=160173892,1626382670&fm=253&fmt=auto&app=120&f=JPEG?w=1280&h=800',
               placeholder: 'lib/src/images/girl_cute.png',
               fit: BoxFit.fill,
             ), //加载网图
             FadeInImage.memoryNetwork(
               placeholder: kTransparentImage,
               image:
-              'https://img0.baidu.com/it/u=1435639120,2241364006&fm=253&fmt=auto&app=138&f=JPEG?w=800&h=500',
+                  'https://img0.baidu.com/it/u=1435639120,2241364006&fm=253&fmt=auto&app=138&f=JPEG?w=800&h=500',
             ), //加载网图
           ],
         ),

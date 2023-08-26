@@ -149,6 +149,7 @@ class _PageBState extends State<PageB> {
                       ),
                     ],
                   ), //按钮组
+                  const Text('SingleChildScrollView水平滚动'),
                   SingleChildScrollView(
                     scrollDirection: Axis.horizontal,
                     child: ButtonBar(
