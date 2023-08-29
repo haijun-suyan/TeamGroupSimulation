@@ -80,9 +80,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
     //Column 布局插件(水平:内容自动膨化 垂直:由上而下)
     //$ ‘’转义符
     //渲染有关的Scaffold渲染插件实例(整个界面的底跟插件实例)
-    if (kDebugMode) {
-
-    }
+    if (kDebugMode) {}
     return Scaffold(
       resizeToAvoidBottomInset: true,
       appBar: AppBar(
@@ -95,7 +93,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
           child: SingleChildScrollView(
               scrollDirection: Axis.vertical,
               padding:
-              const EdgeInsets.only(left: 50, right: 50), //边际填充(内缩)(非负)
+                  const EdgeInsets.only(left: 50, right: 50), //边际填充(内缩)(非负)
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
@@ -106,6 +104,10 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                     opacity: curve,
                     child: Text(_wordPair.asPascalCase),
                   ),
+                  AlgorithmStructure(onPress: () {
+                    //正式的触发路由跳转
+                    Navigator.of(context).pushNamed('/e');
+                  }),
                 ],
               )), //FadeTransition过渡动画呈现插件(其内child对应的插件(默认不可见(当主机controller执行controller.forward();生效命令后child对应的内嵌插件逐步动画呈现)))
         ),
@@ -131,5 +133,28 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
       //正式的触发路由跳转
       Navigator.of(context).pushNamed('/a');
     });
+  }
+}
+
+//构造器类(组件)
+//(自定义)插件 集成类 > (自定义)插件 实例
+//StatelessWidget(常规型)无态SW插件>充当子层插件(上层内嵌插件)>未直接关联状态 (不依赖状态配置信息>间接内嵌渲染插件)
+class AlgorithmStructure extends StatelessWidget {
+  //自调用(Self)
+  //(自定义)待配置公开属性默认可选
+  const AlgorithmStructure({super.key, @required this.onPress});
+  //void Function()? 事件本身所遵循的结构特征
+  final void Function()? onPress;
+
+  //生产编码
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      child: TextButton(
+        autofocus: true,
+        onPressed: onPress,
+        child: const Text('算法Algorithm'),
+      ),
+    );
   }
 }
