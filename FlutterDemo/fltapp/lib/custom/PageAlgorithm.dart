@@ -16,9 +16,9 @@ import 'package:flutter/cupertino.dart';
 
 const cities = [
   "位运算符求和",
-  "北京",
-  "上海",
-  "淮安",
+  "数据交换位置",
+  "数据交换位置",
+  "快速排序",
   "广东",
   "深圳",
   "柳州",
@@ -62,8 +62,50 @@ class _PageAlgorithmState extends State<PageAlgorithm> {
           height: 600,
           child: LtStructure(
             onTap: (value, index) {
-              if (kDebugMode) {
-                print(cities[index]);
+              switch (index) {
+                case 0:
+                  {
+                    if (kDebugMode) {
+                      print(add(0, 5));
+                    }
+                    break;
+                  }
+                case 1:
+                  {
+                    change0(10, 6);
+                    break;
+                  }
+                case 2:
+                  {
+                    change1(14, 9);
+                    break;
+                  }
+                case 3:
+                  break;
+                case 4:
+                  break;
+                case 5:
+                  break;
+                case 6:
+                  break;
+                case 7:
+                  break;
+                case 8:
+                  break;
+                case 9:
+                  break;
+                case 10:
+                  break;
+                case 11:
+                  break;
+                case 12:
+                  break;
+                case 13:
+                  break;
+                case 14:
+                  break;
+                case 15:
+                  break;
               }
             },
           ), //ListView作二次扩展封装更接近业务层的LtStructure表插件
@@ -150,6 +192,36 @@ class _PageAlgorithmState extends State<PageAlgorithm> {
         child: Text(cities[index]),
       ),
     );
+  }
+
+  int add(int a, int b) {
+    int sum, carry; //sum累和，carry待迭入
+    do {
+      sum = a ^ b; //运算‘异或’
+
+      carry = (a & b) << 1; //运算‘与&’ 运算‘左移<<’
+      a = sum;
+      b = carry;
+    } while (b != 0);
+    return sum;
+  }
+
+  void change0(int a, int b) {
+    a = a + b;
+    b = a - b;
+    a = a - b;
+    if (kDebugMode) {
+      print("a:$a,b:$b");
+    }
+  }
+
+  void change1(int a, int b) {
+    a = a ^ b;
+    b = a ^ b;
+    a = a ^ b;
+    if (kDebugMode) {
+      print("a:$a,b:$b");
+    }
   }
 }
 
