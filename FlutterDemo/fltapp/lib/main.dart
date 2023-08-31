@@ -20,7 +20,7 @@ import 'custom/pageC.dart';
 import 'custom/pageD.dart';
 import 'custom/PageAlgorithm.dart';
 
-
+//应用最终的效果现象：本质上决定于内存 而非别名符(别名符具有任意性)
 //响应式开发特性：1.API调用 2.渲染快速重载
 //渲染快速重载(受到设备本身CPU性能的影响)只在项目较小并处于简单的测试玩耍时生效，其余时候快速重载可能会失效(只能采用编译重启机制)
 //flutter项目 main.dart文件内进行编码的修改及首页title修改自动重载，其余dart文件内的编码改动重载失效(CPU性能不支持/只能采取重启)(重载适合于较小demo项目)
@@ -70,6 +70,9 @@ class MyApp extends StatelessWidget {
   @override
   //重构插件编译build事件实例(系统自动触发)
   Widget build(BuildContext context) {
+    //kDebugMode调试模式
+
+
     return MaterialApp(
         localizationsDelegates: const [
           GlobalMaterialLocalizations.delegate,
@@ -98,7 +101,8 @@ class MyApp extends StatelessWidget {
           //路由元素d
           '/d': (BuildContext context) => const PageD(title: 'ListView表视图'),
           //路由元素e
-          '/e': (BuildContext context) => const PageAlgorithm(title: 'Algorithm算法')
+          '/e': (BuildContext context) =>
+              const PageAlgorithm(title: 'Algorithm算法')
         });
   }
 }
