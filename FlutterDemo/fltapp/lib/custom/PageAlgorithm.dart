@@ -1,5 +1,8 @@
 //flutter项目 dart文件参考模版
 // MaterialDesign库
+import 'dart:convert';
+import 'dart:ffi';
+import 'dart:math';
 import 'dart:ui';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -13,15 +16,43 @@ import 'package:flutter/cupertino.dart';
 //自定义Widget文件(库)
 
 //自定义辅助文件
+//哈希结构表：本质 字符码值索引列表
+//String.fromCharCode(89)码值数转换为字符元素
+//持有地址内容 具有指针性
 
+//dart:convert  dart语言中convert转换库
+// ascii.decode([89])码值数组转换为字符元素串
+// ascii.encode('T INCLUD')字符元素串 转换为码值数组
+
+//(循环)执行体 运行1轮所需时间O(1) //O(1) 单轮下业务的基础时间段概念
+// 执行体 运行N轮所需时间O(N) 时间复杂度
+//N:通用逻辑下对应的循环轮数所在的层级
+//O(1) O(N) O(N^2) O(NlogN)....
+// O(N)中的N轮数越少暗示着业务完成运行所需要循环的轮数越少(算法越精妙优良)
+//哈希结构表底层采用的是映射机制通过映射关系帮助设备在O(1)内查找到某个目标元素(效率最高)
+//哈希结构的缺点：需额外的消耗内存
+//普通变量强调(堆内存里面的)内容
+//指针变量强调(堆内存本身的入口)地址
+//*指针变量 等同于 普通变量
+//查找 顺序 二分 哈希结构表 二叉排序树
+//排序研究数据内容的本身而非索引内存区
+//无序直接遍历n^2
+//有序直接遍历logn
+//有序特征管控下位置的生效数据
+//选定参考数据: 参考数据的有序位置 (开始低位段(开辟)索引内存区(数量)存放小数据(比参考数据小的数据/小于参考数据的数据))
+//partition 瓜分
+//索引号 等效 指针地址
+//有序特性：升序：大于前面所有的其他数据小于后面所有的其他数据；降序：小于前面所有的其他数据大于后面所有的其他数据
+//快速排序本质：递归+二分(临界数)瓜分)
+//Dart不支持指针层的访问传递(Dart不支持操作指针)
 const cities = [
   "位运算符求和",
-  "数据交换位置",
-  "数据交换位置",
-  "快速排序",
-  "广东",
-  "深圳",
-  "柳州",
+  "数据交换位置(2个整数据(非数组内容))",
+  "数据交换位置(2个整数据(非数组内容))",
+  "快速排序(递归+二分(临界数)瓜分)",
+  "统计出现1次的第1个字符",
+  "统计出现1次的全部字符",
+  "引入三方变量c 实现 内容交换",
   "杭州",
   "洛阳",
   "苏州",
@@ -72,22 +103,42 @@ class _PageAlgorithmState extends State<PageAlgorithm> {
                   }
                 case 1:
                   {
-                    change0(10, 6);
+                    swap1(10, 6);
                     break;
                   }
                 case 2:
                   {
-                    change1(14, 9);
+                    swap2(14, 9);
                     break;
                   }
                 case 3:
-                  break;
+                  {
+                    var data = [3, 5, 1, 1, 8, 9, 0, 2, 4];
+                    quickSort(data, 0, 8);
+                    if (kDebugMode) {
+                      print(data);
+                    }
+                    break;
+                  }
                 case 4:
-                  break;
+                  {
+                    if (kDebugMode) {
+                      print(notRepeatingFirstChar('aaaddghjjk'));
+                    }
+                    break;
+                  }
                 case 5:
-                  break;
+                  {
+                    if (kDebugMode) {
+                      print(notRepeatingChars(''));
+                    }
+                    break;
+                  }
                 case 6:
-                  break;
+                  {
+                    swap(14, 9);
+                    break;
+                  }
                 case 7:
                   break;
                 case 8:
@@ -206,21 +257,151 @@ class _PageAlgorithmState extends State<PageAlgorithm> {
     return sum;
   }
 
-  void change0(int a, int b) {
+  void swap(int a, int b) {
+    //额外引入三方辅助变量c实现交换
+    var c = a;
+    a = b;
+    b = c;
+
+    if (kDebugMode) {
+      //交换后的内容处于临变量ab内存中
+      print("a:$a,b:$b");
+    }
+  }
+
+  void swap1(int a, int b) {
+    //2个整数据(非数组内容)
     a = a + b;
     b = a - b;
     a = a - b;
+
     if (kDebugMode) {
       print("a:$a,b:$b");
     }
   }
 
-  void change1(int a, int b) {
+  void swap2(int a, int b) {
+    //2个整数据(非数组内容)
     a = a ^ b;
     b = a ^ b;
     a = a ^ b;
+
     if (kDebugMode) {
       print("a:$a,b:$b");
+    }
+  }
+
+  //end<= a.length
+  String notRepeatingFirstChar(String toSearch) {
+    int hashTableSize = 256;
+    List<int> onHands = ascii.encode(toSearch);
+    List<int> hashTable = [];
+    for (int i = 0; i < hashTableSize; i++) {
+      hashTable.add(0);
+    }
+
+    for (int i = 0; i < onHands.length; i++) {
+      hashTable[onHands[i]]++;
+    }
+    for (int i = 0; i < hashTableSize; i++) {
+      if (hashTable[i] == 1) {
+        return String.fromCharCode(i);
+      }
+    }
+    return '';
+  }
+
+  List<String> notRepeatingChars(String toSearch) {
+    int hashTableSize = 256;
+    List<int> onHands = ascii.encode(toSearch);
+    List<int> hashTable = [];
+    for (int i = 0; i < hashTableSize; i++) {
+      hashTable.add(0);
+    }
+
+    for (int i = 0; i < onHands.length; i++) {
+      hashTable[onHands[i]]++;
+    }
+    List<String> notRepeatingChars = [];
+    for (int i = 0; i < hashTableSize; i++) {
+      if (hashTable[i] == 1) {
+        notRepeatingChars.add(String.fromCharCode(i));
+      }
+    }
+    return notRepeatingChars;
+  }
+
+  //获取[min max]闭合范围内随机数
+  int randomIntClose(int min, int max) {
+    var result = min + Random().nextInt(max - min + 1);
+    return result;
+  }
+
+  //获取[min max)半闭合半开口范围内随机数
+  int randomInt(int min, int max) {
+    var result = min + Random().nextInt(max - min);
+    return result;
+  }
+
+  //二分(临界数)瓜分算法 事件>确定下1个有序数据(编号)
+  //一段连续的无序数据可通过 二分(临界数)瓜分机制处理
+  int partition(List<int> data, int start, int end) {
+    if (data.isEmpty || start < 0) {
+      if (kDebugMode) {
+        print('Invalid Parameters');
+      }
+    }
+    //瓜分机制中范围区内最后的索引内存区先默认存放已选定参考数据: 1个位置的有序数据(特征前面所有/后面所有)
+    //***瓜分机制结束后产生 临界数、左无序(小数据)部分、右无序(大数据)部分***
+    //左低位段索引内存范围区存放小数据
+    //右高位段索引内存范围区存放大数据
+    //瓜分机制中待二分范围区内最后的索引内存区先默认存放已选定参考数据
+    int idx = randomIntClose(start, end);
+    //交换data[idx]/data[end]
+    //引入辅助变量idxend实现交换
+    var idxend = data[idx];
+    data[idx] = data[end];
+    data[end] = idxend;
+
+    //无序(小数据)左部分区small索引码
+    int small = start - 1;
+    for (int index = start; index < end; index++) {
+      if (data[index] < data[end]) {
+        ++small;
+        if (small != index) {
+          //引入辅助变量indexsmall实现交换
+          var indexsmall = data[index];
+          data[index] = data[small];
+          data[small] = indexsmall;
+        }
+      }
+    }
+
+    ++small;
+    //引入辅助变量smallend实现交换
+    var smallend = data[small];
+    data[small] = data[end];
+    data[end] = smallend;
+
+    return small;
+  }
+
+  //1个实例 对应着1个堆内存区 对应着1个上下文环境(体系)
+  //不同实例 对应着不同堆内存区 对应着不同上下文环境(体系)
+  //递归+二分(临界数)瓜分
+  quickSort(List<int> data, int start, int end) {
+    if (start == end) {
+      return;
+    }
+    int index = partition(data, start, end);
+
+    if (index > start) {
+      //递归：内部自调用(递归概念：分析逻辑：由全部至细节部分; 完成顺序：由细节部分至全部)
+      quickSort(data, start, index - 1);
+    }
+    if (index < end) {
+      //递归：内嵌自调用(螺旋式循环)的概念(底层细节先完成)
+      quickSort(data, index + 1, end);
     }
   }
 }
