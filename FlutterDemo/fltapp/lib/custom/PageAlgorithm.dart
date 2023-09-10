@@ -15,6 +15,7 @@ import 'package:flutter/services.dart' show rootBundle;
 import 'package:flutter/cupertino.dart';
 //自定义Widget文件(库)
 
+// data.sort() dart语言系统层面提供的排序事件
 //自定义辅助文件
 //哈希结构表：本质 字符码值索引列表
 //String.fromCharCode(89)码值数转换为字符元素
@@ -45,6 +46,8 @@ import 'package:flutter/cupertino.dart';
 //有序特性：升序：大于前面所有的其他数据小于后面所有的其他数据；降序：小于前面所有的其他数据大于后面所有的其他数据
 //快速排序本质：递归+二分(临界数)瓜分)
 //Dart不支持指针层的访问传递(Dart不支持操作指针)
+//for循环语句体：每一轮执行区对应着全新不同的上下文环境，循环体执行区内声明的临时量只适用于所在轮(数据状态不稳)
+//递归每一次对应着全新不同的上下文环境
 const cities = [
   "位运算符求和",
   "数据交换位置(2个整数据(非数组内容))",
@@ -53,10 +56,10 @@ const cities = [
   "统计出现1次的第1个字符",
   "统计出现1次的全部字符",
   "引入三方变量c 实现 内容交换",
-  "杭州",
-  "洛阳",
-  "苏州",
-  "昆山",
+  "列表中出现次数超过一半的数字",
+  "列表中出现频率超过一半的数字(优化)",
+  "列表中最小的K个数",
+  "冒泡排序",
   "台州",
   "武汉",
   "泰安",
@@ -140,11 +143,28 @@ class _PageAlgorithmState extends State<PageAlgorithm> {
                     break;
                   }
                 case 7:
-                  break;
+                  {
+                    if (kDebugMode) {
+                      print(moreThanHalfNum([0, 5, 5, 1, 5, 0, 5, 0, 5, 2, 5]));
+                    }
+                    break;
+                  }
                 case 8:
-                  break;
+                  {
+                    if (kDebugMode) {
+                      print(moreThanHalfNumSuggest(
+                          [0, 5, 5, 1, 5, 0, 5, 0, 5, 2, 5]));
+                    }
+                    break;
+                  }
                 case 9:
-                  break;
+                  {
+                    if (kDebugMode) {
+                      print(getLeastKNumbers(
+                          [0, 5, 5, 1, 5, 0, 5, 0, 5, 2, 5],4));
+                    }
+                    break;
+                  }
                 case 10:
                   break;
                 case 11:
@@ -403,6 +423,96 @@ class _PageAlgorithmState extends State<PageAlgorithm> {
       //递归：内嵌自调用(螺旋式循环)的概念(底层细节先完成)
       quickSort(data, index + 1, end);
     }
+  }
+
+  moreThanHalfNum(List<int> data) {
+    quickSort(data, 0, data.length - 1);
+
+    Map<String, int> elementNum = {};
+    int element = 0;
+    int cnt = 0;
+    for (int i = 0; i < data.length; i++) {
+      if (data[i] == element) {
+        cnt++;
+      } else {
+        elementNum[element.toString()] = cnt;
+        element = data[i];
+        cnt = 1;
+      }
+      if (i == data.length - 1) {
+        elementNum[element.toString()] = cnt;
+      }
+    }
+    //data.keys表示key的无序集Iterable<K> 举例：(0, 1, 2, 5)
+    //data.keys.toList()表示转成List<K> 举例：[0, 1, 2, 5]
+    for (int i = 0; i < elementNum.keys.toList().length; i++) {
+      var elementKey = elementNum.keys.toList()[i];
+      if (elementNum[elementKey]! > data.length / 2) {
+        return int.tryParse(elementKey);
+      }
+    }
+    return null;
+  }
+
+  bool checkMoreThanHalf(List<int> data, int num) {
+    int times = 0;
+    for (int i = 0; i < data.length; i++) {
+      if (data[i] == num) {
+        times++;
+      }
+    }
+    bool isMoreThanHalf = true;
+    if (times * 2 <= data.length) {
+      isMoreThanHalf = false;
+    }
+    return isMoreThanHalf;
+  }
+
+  moreThanHalfNumSuggest(List<int> data) {
+    if (data.isEmpty) {
+      return null;
+    }
+
+    int middle = data.length >> 1;
+    int start = 0;
+    int end = data.length - 1;
+    int index = partition(data, start, end);
+    while (index != middle) {
+      if (index > middle) {
+        index = partition(data, start, index - 1);
+      } else {
+        index = partition(data, index + 1, end);
+      }
+    }
+
+    int result = data[middle];
+    if (checkMoreThanHalf(data, result)) {
+      return result;
+    } else {
+      return null;
+    }
+  }
+
+  getLeastKNumbers(List<int> data, int k) {
+    if (data.isEmpty || k > data.length || k <= 0) {
+      return null;
+    }
+    int start = 0;
+    int end = data.length - 1;
+    int index = partition(data, start, end);
+    while (index!=k-1) {
+      if (index > k-1) {
+        index = partition(data, start, index - 1);
+      } else {
+        index = partition(data, index + 1, end);
+      }
+    }
+
+    List<int> outputData = [];
+    for (int i=0;i<k;i++){
+      outputData.add(data[i]);
+    }
+    return outputData;
   }
 }
 
