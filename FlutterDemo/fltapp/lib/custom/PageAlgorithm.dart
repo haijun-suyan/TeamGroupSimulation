@@ -48,20 +48,26 @@ import 'package:flutter/cupertino.dart';
 //Dart不支持指针层的访问传递(Dart不支持操作指针)
 //for循环语句体：每一轮执行区对应着全新不同的上下文环境，循环体执行区内声明的临时量只适用于所在轮(数据状态不稳)
 //递归每一次对应着全新不同的上下文环境
+//数据的研究是连续的一段
+//左侧段/右侧段 对应 大循环体/递归 下一轮
+//临界二分机制：临界+左右侧
+//冒泡机制：临界+右侧
+//索引内存区的总数量不变
+//升序列表经过几轮逆向旋转后形成旋转列表
 const cities = [
   "位运算符求和",
   "数据交换位置(2个整数据(非数组内容))",
   "数据交换位置(2个整数据(非数组内容))",
-  "快速排序(递归+二分(临界数)瓜分)",
+  "快速排序(递归二分)(递归+二分(临界数)瓜分)",
   "统计出现1次的第1个字符",
   "统计出现1次的全部字符",
-  "引入三方变量c 实现 内容交换",
+  "引入三方变量c 实现 内容交换(推荐)",
   "列表中出现次数超过一半的数字",
   "列表中出现频率超过一半的数字(优化)",
   "列表中最小的K个数",
-  "冒泡排序",
-  "台州",
-  "武汉",
+  "冒泡事件获取(有序)(最小)临界",
+  "冒泡排序(递归冒泡)",
+  "临界二分事件获取(有序)(最小)值",
   "泰安",
   "郑州",
   "天津"
@@ -161,16 +167,35 @@ class _PageAlgorithmState extends State<PageAlgorithm> {
                   {
                     if (kDebugMode) {
                       print(getLeastKNumbers(
-                          [0, 5, 5, 1, 5, 0, 5, 0, 5, 2, 5],4));
+                          [0, 5, 5, 1, 5, 0, 5, 0, 5, 2, 5], 4));
                     }
                     break;
                   }
                 case 10:
-                  break;
+                  {
+                    if (kDebugMode) {
+                      print(bubbleContiguousExchange(
+                          [-8, 5, 7, 1, 8, 0, 9, 0, 5, 10, 50], 0, 10));
+                    }
+                    break;
+                  }
                 case 11:
-                  break;
+                  {
+                    var data = [1, 3, 7, 9, 13, 10, 12, 45, 34, 12, 14];
+                    bubbleSort(data, 4, 10);
+                    if (kDebugMode) {
+                      print(data);
+                    }
+                    break;
+                  }
                 case 12:
-                  break;
+                  {
+                    if (kDebugMode) {
+                      print(getLeastKNumbers(
+                          [0, 5, 5, 1, 5, 0, -9, 0, 5, 2, 5], 1));
+                    }
+                    break;
+                  }
                 case 13:
                   break;
                 case 14:
@@ -500,8 +525,8 @@ class _PageAlgorithmState extends State<PageAlgorithm> {
     int start = 0;
     int end = data.length - 1;
     int index = partition(data, start, end);
-    while (index!=k-1) {
-      if (index > k-1) {
+    while (index != k - 1) {
+      if (index > k - 1) {
         index = partition(data, start, index - 1);
       } else {
         index = partition(data, index + 1, end);
@@ -509,10 +534,47 @@ class _PageAlgorithmState extends State<PageAlgorithm> {
     }
 
     List<int> outputData = [];
-    for (int i=0;i<k;i++){
+    for (int i = 0; i < k; i++) {
       outputData.add(data[i]);
     }
     return outputData;
+  }
+
+  //冒泡机制：临界+右侧
+  //相邻交换冒泡事件(end-start个相邻交换)：(有序)(最小)临界+右侧
+  bubbleContiguousExchange(List<int> data, int start, int end) {
+    if (data.isEmpty) {
+      return null;
+    }
+    if (start == end) {
+      return data[start];
+    }
+
+    for (int i = 0; i < end - start; i++) {
+      if (data[end - i] < data[end - i - 1]) {
+        var temp = data[end - i - 1];
+        data[end - i - 1] = data[end - i];
+        data[end - i] = temp;
+      }
+    }
+
+    //1段无序数据的冒泡过程结束(end-start个相邻交换)
+    //(有序)(最小)临界+右侧区
+    //当前上下文环境
+    return data[start];
+  }
+
+  //冒泡之排序：for循环/递归+冒泡
+  bubbleSort(List<int> data, int start, int end) {
+    if (data.isEmpty) {
+      return;
+    }
+    for (int i = 0; i < end - start; i++) {
+      //引用交换冒泡事件
+      bubbleContiguousExchange(data, start + i, end);
+    }
+    //当前上下文环境(状态瞬间)
+    return data;
   }
 }
 
