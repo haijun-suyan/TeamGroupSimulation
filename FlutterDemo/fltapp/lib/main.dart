@@ -54,7 +54,7 @@ import 'custom/PageAlgorithm.dart';
 //Expanded缩放插件(存在局限性(适用于少量情况))
 //Flexible弹性插件
 //1 元类规则区(栈):多 内容堆区
-//
+//GitLab 或 GitHub  勾联着Git环境的 云 Lab 或Hub 托管平台
 void main() {
   //Dart日志函数
   runApp(const MyApp());
