@@ -60,6 +60,8 @@ import 'package:flutter/cupertino.dart';
 //int start, int end 待研究数据段(start编号 end编号)
 //旋转列表data[start]>=data[end]
 //有序数据段 旋转获得 旋转数据段
+//递归特性：1.类循环体 2.底层数据return向外(上)层作传递
+//一般情况下递归用于处理纯动作的循环(涉及指定数据的捕获通过for循环)
 const cities = [
   "位运算符求和",
   "数据交换位置(2个整数据(非数组内容))",
