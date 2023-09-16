@@ -53,7 +53,13 @@ import 'package:flutter/cupertino.dart';
 //临界二分机制：临界+左右侧
 //冒泡机制：临界+右侧
 //索引内存区的总数量不变
-//升序列表经过几轮逆向旋转后形成旋转列表
+//升序列表经过(n-1)轮逆向旋转后形成(n-1)轮旋转列表 //(1,2,...,n-1)轮旋转列表
+//n个数据的升序列表经历n轮旋转重新还原[1,2,3,4,5]  5轮旋转=> [1,2,3,4,5]
+//递归 for循环语句的循环体
+//for循环使用广泛；递归循环事件不适合指定返回值
+//int start, int end 待研究数据段(start编号 end编号)
+//旋转列表data[start]>=data[end]
+//有序数据段 旋转获得 旋转数据段
 const cities = [
   "位运算符求和",
   "数据交换位置(2个整数据(非数组内容))",
@@ -67,10 +73,10 @@ const cities = [
   "列表中最小的K个数",
   "冒泡事件获取(有序)(最小)临界",
   "冒泡排序(递归冒泡)",
-  "临界二分事件获取(有序)(最小)值",
-  "泰安",
-  "郑州",
-  "天津"
+  "临界二分事件获取(有序)(最小)值logn",
+  "旋转数据段取最小值",
+  "旋转列表取最小值",
+  "旋转列表取最小值(递归)(不推荐)"
 ];
 
 //内容数据资源
@@ -197,11 +203,26 @@ class _PageAlgorithmState extends State<PageAlgorithm> {
                     break;
                   }
                 case 13:
-                  break;
+                  {
+                    if (kDebugMode) {
+                      print(rotationList([3, 4, 5, 6, 7, 8, 1, 2], 3, 7));
+                    }
+                    break;
+                  }
                 case 14:
-                  break;
+                  {
+                    if (kDebugMode) {
+                      print(rotationList([3, 4, 5, 6, 7, 8, 1, 2], 0, 7));
+                    }
+                    break;
+                  }
                 case 15:
-                  break;
+                  {
+                    if (kDebugMode) {
+                      print(rotationListRecursion([5, 6, 7, 0, 1, 2], 0, 5));
+                    }
+                    break;
+                  }
               }
             },
           ), //ListView作二次扩展封装更接近业务层的LtStructure表插件
@@ -576,6 +597,58 @@ class _PageAlgorithmState extends State<PageAlgorithm> {
     //当前上下文环境(状态瞬间)
     return data;
   }
+
+  //旋转数据段
+  rotationList(List<int> data, int start, int end) {
+    //UnitWheel
+    if (data.isEmpty) {
+      return null;
+    }
+    //中位编号(内存)
+    int indexMid = 0;
+    while (data[start] >= data[end]) {
+      if (end - start == 1) {
+        indexMid = end;
+        break;
+      }
+      int lengthAnalyzed = end - start + 1;
+      indexMid = (lengthAnalyzed >> 1) + start;
+      if (data[indexMid] >= data[start]) {
+        //下轮研究中位后数据的范围
+        start = indexMid;
+      } else {
+        end = indexMid;
+      }
+    }
+
+    return data[indexMid];
+  }
+
+  rotationListRecursion(List<int> data, int start, int end) {
+    if (data.isEmpty) {
+      return null;
+    }
+
+    //中位编号(内存)
+    int indexMid = 0;
+
+    if (end - start == 1) {
+      indexMid = end;
+      return data[indexMid];
+    }
+
+    int lengthAnalyzed = end - start + 1;
+    indexMid = (lengthAnalyzed >> 1) + start;
+
+    if (data[indexMid] >= data[start]) {
+      //下轮研究中位后数据的范围
+      //递归(底层数据向外层作传递)
+      return rotationListRecursion(data, indexMid, end);
+    } else {
+      return rotationListRecursion(data, start, indexMid);
+    }
+  }
+
 }
 
 //****通过回调函数实现逆向传值(内容数据反馈回UI左上前业务层逻辑)***
