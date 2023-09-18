@@ -62,6 +62,8 @@ import 'package:flutter/cupertino.dart';
 //有序数据段 旋转获得 旋转数据段
 //递归特性：1.类循环体 2.底层数据return向外(上)层作传递
 //一般情况下递归用于处理纯动作的循环(涉及指定数据的捕获通过for循环)
+//查找的基础外加外层大循环即形成排序
+//排序的过程比查找的过程更加复杂
 const cities = [
   "位运算符求和",
   "数据交换位置(2个整数据(非数组内容))",
@@ -77,7 +79,7 @@ const cities = [
   "冒泡排序(递归冒泡)",
   "临界二分事件获取(有序)(最小)值logn",
   "旋转数据段取最小值",
-  "旋转列表取最小值",
+  "旋转列表取最小值(推荐)",
   "旋转列表取最小值(递归)(不推荐)"
 ];
 
@@ -207,14 +209,16 @@ class _PageAlgorithmState extends State<PageAlgorithm> {
                 case 13:
                   {
                     if (kDebugMode) {
-                      print(rotationList([3, 4, 5, 6, 7, 8, 1, 2], 3, 7));
+                      print(rotationListRecommend(
+                          [3, 4, 5, 6, 7, 8, 1, 2], 3, 7));
                     }
                     break;
                   }
                 case 14:
                   {
                     if (kDebugMode) {
-                      print(rotationList([3, 4, 5, 6, 7, 8, 1, 2], 0, 7));
+                      print(rotationListRecommend(
+                          [1, 2, 3, 4, 5, 6, 7, 8], 0, 7));
                     }
                     break;
                   }
@@ -548,6 +552,7 @@ class _PageAlgorithmState extends State<PageAlgorithm> {
     int start = 0;
     int end = data.length - 1;
     int index = partition(data, start, end);
+    //while循环(事先)不知具体轮数
     while (index != k - 1) {
       if (index > k - 1) {
         index = partition(data, start, index - 1);
@@ -600,14 +605,25 @@ class _PageAlgorithmState extends State<PageAlgorithm> {
     return data;
   }
 
-  //旋转数据段
-  rotationList(List<int> data, int start, int end) {
-    //UnitWheel
+  //(常规顺序)列表的数据段内最小值
+  int minByRoutineOrder(List<int> data, int start, int end) {
+    int min = data[start];
+    //for循环(事先)知具体轮数
+    for (int i = start + 1; i <= end; i++) {
+      if (data[i] < min) {
+        min = data[i];
+      }
+    }
+    return min;
+  }
+
+  //旋转数据段(推荐)
+  rotationListRecommend(List<int> data, int start, int end) {
     if (data.isEmpty) {
       return null;
     }
     //中位编号(内存)
-    int indexMid = 0;
+    int indexMid = start;
     while (data[start] >= data[end]) {
       if (end - start == 1) {
         indexMid = end;
@@ -615,10 +631,15 @@ class _PageAlgorithmState extends State<PageAlgorithm> {
       }
       int lengthAnalyzed = end - start + 1;
       indexMid = (lengthAnalyzed >> 1) + start;
+      if (data[indexMid] == data[start] && data[start] == data[end]) {
+        //普通顺序查找(相对临时量的逐个顺序的比较)
+        return minByRoutineOrder(data, start, end);
+      }
+
       if (data[indexMid] >= data[start]) {
         //下轮研究中位后数据的范围
         start = indexMid;
-      } else {
+      } else if (data[indexMid] <= data[end]) {
         end = indexMid;
       }
     }
@@ -632,8 +653,7 @@ class _PageAlgorithmState extends State<PageAlgorithm> {
     }
 
     //中位编号(内存)
-    int indexMid = 0;
-
+    int indexMid = start;
     if (end - start == 1) {
       indexMid = end;
       return data[indexMid];
@@ -641,16 +661,19 @@ class _PageAlgorithmState extends State<PageAlgorithm> {
 
     int lengthAnalyzed = end - start + 1;
     indexMid = (lengthAnalyzed >> 1) + start;
+    if (data[indexMid] == data[start] && data[start] == data[end]) {
+      //普通顺序查找(相对临时量的逐个顺序的比较)
+      return minByRoutineOrder(data, start, end);
+    }
 
     if (data[indexMid] >= data[start]) {
       //下轮研究中位后数据的范围
       //递归(底层数据向外层作传递)
       return rotationListRecursion(data, indexMid, end);
-    } else {
+    } else if (data[indexMid] <= data[end]) {
       return rotationListRecursion(data, start, indexMid);
     }
   }
-
 }
 
 //****通过回调函数实现逆向传值(内容数据反馈回UI左上前业务层逻辑)***
