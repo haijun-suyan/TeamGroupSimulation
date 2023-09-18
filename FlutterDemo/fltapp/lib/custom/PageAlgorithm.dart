@@ -64,6 +64,7 @@ import 'package:flutter/cupertino.dart';
 //一般情况下递归用于处理纯动作的循环(涉及指定数据的捕获通过for循环)
 //查找的基础外加外层大循环即形成排序
 //排序的过程比查找的过程更加复杂
+//不同的上下文环境 可同级可嵌套
 const cities = [
   "位运算符求和",
   "数据交换位置(2个整数据(非数组内容))",
@@ -225,7 +226,7 @@ class _PageAlgorithmState extends State<PageAlgorithm> {
                 case 15:
                   {
                     if (kDebugMode) {
-                      print(rotationListRecursion([5, 6, 7, 0, 1, 2], 0, 5));
+                      print(rotationListRecursion([1, 1, 1, 0, 1], 0, 4));
                     }
                     break;
                   }
@@ -647,32 +648,43 @@ class _PageAlgorithmState extends State<PageAlgorithm> {
     return data[indexMid];
   }
 
+  //(自定义)递归事件
+  //旋转列表的旋转数据段
   rotationListRecursion(List<int> data, int start, int end) {
     if (data.isEmpty) {
       return null;
     }
 
+    /****类似for循环单轮内的执行逻辑区****/
+    /****类似for循环单轮内的执行逻辑(开始)****/
     //中位编号(内存)
     int indexMid = start;
     if (end - start == 1) {
       indexMid = end;
       return data[indexMid];
     }
-
     int lengthAnalyzed = end - start + 1;
     indexMid = (lengthAnalyzed >> 1) + start;
     if (data[indexMid] == data[start] && data[start] == data[end]) {
       //普通顺序查找(相对临时量的逐个顺序的比较)
       return minByRoutineOrder(data, start, end);
     }
+    /****类似for循环单轮内的执行逻辑(结束)****/
 
+    /****递归命令码引用区*****/
+    /****递归命令码引用处(开始)*****/
     if (data[indexMid] >= data[start]) {
       //下轮研究中位后数据的范围
       //递归(底层数据向外层作传递)
+      //引用递归命令码
+      //开启全新的上下文环境
       return rotationListRecursion(data, indexMid, end);
     } else if (data[indexMid] <= data[end]) {
+      //递归命令码引用处
+      //开启全新的上下文环境
       return rotationListRecursion(data, start, indexMid);
     }
+    /****递归命令码引用处(结束)*****/
   }
 }
 
