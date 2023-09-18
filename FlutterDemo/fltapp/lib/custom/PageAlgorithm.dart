@@ -648,7 +648,7 @@ class _PageAlgorithmState extends State<PageAlgorithm> {
     return data[indexMid];
   }
 
-  //(自定义)递归事件
+  //(自定义)递归事件(可转换 循环语句体)
   //旋转列表的旋转数据段
   rotationListRecursion(List<int> data, int start, int end) {
     if (data.isEmpty) {
