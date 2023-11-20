@@ -131,7 +131,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
     // });
     setState(() {
       //正式的触发路由跳转
-      Navigator.of(context).pushNamed('/a');
+      Navigator.of(context).pushNamed('/b');
     });
   }
 }

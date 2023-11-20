@@ -4,8 +4,9 @@ import 'dart:ui';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 //更基本Widget：Widgets集
-import 'dart:async' show Future;
-import 'package:flutter/services.dart' show rootBundle;
+import 'dart:async';
+import 'package:flutter/services.dart';
+
 //ios样式Widget(某些定制化独特风格)：Cupertino库
 //自定义Widget文件(库)
 
@@ -22,9 +23,68 @@ class PageB extends StatefulWidget {
   State<PageB> createState() => _PageBState();
 }
 
+typedef MethodCallHandler = Future<dynamic> Function(MethodCall call)?;
+
 //类 级 构造器
 //(自定义)状态子有态SW插件类 实例(体)
 class _PageBState extends State<PageB> {
+
+  //获取原生所构建出的通道channel(通道名即通道原生对应的名)
+  static const channel = const MethodChannel('Flutter/navigation');
+
+
+
+
+  Future<int> _swiftCustomMethod() async {
+    // String desLog='';
+    // try {
+    //   //数据逆向Native>Flutter
+    //   // var result = await channel.invokeMethod('swiftCustomMethod').then(sss){
+    //   //
+    //   // };
+    //
+    //   await channel.invokeMethod('swiftCustomMethod').then((sss)=>{print(sss)});
+    //
+    //   // desLog = 'result is  $result';
+    //   // print(result);
+    // } on PlatformException catch (e) {
+    //   desLog = "Failed reason: '${e.message}'";
+    //   print(desLog);
+    // }
+    //
+    //
+    // setState(() {
+    //   desLog;
+    // });
+
+    return await channel.invokeMethod('swiftCustomMethod');
+
+  }
+
+  // -------------flutter提供的功能-----------------
+
+  channel.setMethodCallHandler((call) async {
+  ddddd?.call(call);
+  });
+
+
+  Future<int> ddddd(MethodCall call) async {
+    print('dddddd');
+  };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   @override
   //状态SW插件子类的本身执行区中重构插件编译build事件实例(系统自动触发)
   Widget build(BuildContext context) {
@@ -57,13 +117,17 @@ class _PageBState extends State<PageB> {
           child: SingleChildScrollView(
               scrollDirection: Axis.vertical,
               padding:
-              const EdgeInsets.only(left: 50, right: 50), //边际填充(内缩)(非负)
+                  const EdgeInsets.only(left: 50, right: 50), //边际填充(内缩)(非负)
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   const Text(
                     '欢迎来到B界面',
                   ),
+                  ChannelTest(onPress: (){
+                    _swiftCustomMethod();
+
+                  }),
                   SizedBox(
                     height: 40,
                     child: TextButton(
@@ -75,9 +139,9 @@ class _PageBState extends State<PageB> {
                             fontSize: 17,
                             color: Colors.black)),
                         foregroundColor:
-                        MaterialStateProperty.all(Colors.black),
+                            MaterialStateProperty.all(Colors.black),
                         mouseCursor:
-                        MaterialStateProperty.all(SystemMouseCursors.wait),
+                            MaterialStateProperty.all(SystemMouseCursors.wait),
                       ),
                       child: const Text('文本按钮'),
                     ), //文本按钮
@@ -89,45 +153,45 @@ class _PageBState extends State<PageB> {
                         child: Text('阴影按钮'),
                         style: ButtonStyle(
                             backgroundColor:
-                            MaterialStateProperty.all(Colors.red),
+                                MaterialStateProperty.all(Colors.red),
                             foregroundColor:
-                            MaterialStateProperty.all(Colors.white),
+                                MaterialStateProperty.all(Colors.white),
                             elevation: MaterialStateProperty.all(50) //阴影
-                        ),
+                            ),
                       ),
-                      SizedBox(
-                        width: screenW,
-                        child: Row(children: [
-                          Expanded(
-                            child: ElevatedButton.icon(
-                              onPressed: () {},
-                              icon: const Icon(null),
-                              label: const Text('图标按钮'),
-                            ),
-                          ),
-                          Expanded(
-                            child: ElevatedButton.icon(
-                              onPressed: () {},
-                              icon: const Icon(Icons.add),
-                              label: const Text('图标按钮'),
-                            ),
-                          ),
-                          Expanded(
-                            child: ElevatedButton.icon(
-                              onPressed: () {},
-                              icon: const Icon(Icons.account_box),
-                              label: const Text('图标按钮'),
-                            ),
-                          ),
-                          Expanded(
-                            child: ElevatedButton.icon(
-                              onPressed: () {},
-                              icon: const Icon(Icons.account_box),
-                              label: const Text('图标按钮'),
-                            ),
-                          ),
-                        ]),
-                      ),
+                      // SizedBox(
+                      //   width: screenW*4,
+                      //   child: Row(children: [
+                      //     Expanded(
+                      //       child: ElevatedButton.icon(
+                      //         onPressed: () {},
+                      //         icon: const Icon(null),
+                      //         label: const Text('图标按钮'),
+                      //       ),
+                      //     ),
+                      //     Expanded(
+                      //       child: ElevatedButton.icon(
+                      //         onPressed: () {},
+                      //         icon: const Icon(Icons.add),
+                      //         label: const Text('图标按钮'),
+                      //       ),
+                      //     ),
+                      //     Expanded(
+                      //       child: ElevatedButton.icon(
+                      //         onPressed: () {},
+                      //         icon: const Icon(Icons.account_box),
+                      //         label: const Text('图标按钮'),
+                      //       ),
+                      //     ),
+                      //     Expanded(
+                      //       child: ElevatedButton.icon(
+                      //         onPressed: () {},
+                      //         icon: const Icon(Icons.account_box),
+                      //         label: const Text('图标按钮'),
+                      //       ),
+                      //     ),
+                      //   ]),
+                      // ),
                       SizedBox(
                         height: 60,
                         child: ElevatedButton(
@@ -136,7 +200,7 @@ class _PageBState extends State<PageB> {
                             shape: MaterialStateProperty.all(
                               const RoundedRectangleBorder(
                                 borderRadius:
-                                BorderRadius.all(Radius.circular(20.0)),
+                                    BorderRadius.all(Radius.circular(20.0)),
                               ),
                             ),
                             textStyle: MaterialStateProperty.all(
@@ -429,5 +493,39 @@ class _PageBState extends State<PageB> {
     setState(() {
       Navigator.of(context).pushNamed('/c');
     });
+  }
+}
+
+//构造器类(组件)
+//(自定义)插件 集成类 > (自定义)插件 实例
+//StatelessWidget(常规型)无态SW插件>充当子层插件(上层内嵌插件)>未直接关联状态 (不依赖状态配置信息>间接内嵌渲染插件)
+class ChannelTest extends StatelessWidget {
+  //自调用(Self)
+  //(自定义)待配置公开属性默认可选
+  const ChannelTest({super.key, this.onPress});
+  //void Function()? 事件本身所遵循的结构特征
+  final void Function()? onPress;
+
+  //生产编码
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: 40,
+      child: ElevatedButton(
+        onPressed: onPress,
+        style: ButtonStyle(
+          shape: MaterialStateProperty.all(
+              const CircleBorder(side: BorderSide(color: Colors.white))),
+          textStyle: MaterialStateProperty.all(const TextStyle(
+              backgroundColor: Colors.transparent, fontSize: 17)),
+        ),
+        child: const Text('通道'),
+      ), //凸起按钮
+    );
+  }
+
+  Future<String> loadAsset() async {
+    return await rootBundle
+        .loadString('lib/src/assets/lover_kiss.png.dataset/lover_kiss.json');
   }
 }
