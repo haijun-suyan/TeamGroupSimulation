@@ -3,6 +3,7 @@
 import 'dart:ui';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+
 //更基本Widget：Widgets集
 import 'dart:async';
 import 'package:flutter/services.dart';
@@ -30,60 +31,56 @@ typedef MethodCallHandler = Future<dynamic> Function(MethodCall call)?;
 class _PageBState extends State<PageB> {
 
   //获取原生所构建出的通道channel(通道名即通道原生对应的名)
-  static const channel = const MethodChannel('Flutter/navigation');
+  static const channel = const MethodChannel(
+      'plugins.flutter.io/google_sign_in_ios');
 
 
-
-
-  Future<int> _swiftCustomMethod() async {
-    // String desLog='';
-    // try {
-    //   //数据逆向Native>Flutter
-    //   // var result = await channel.invokeMethod('swiftCustomMethod').then(sss){
-    //   //
-    //   // };
-    //
-    //   await channel.invokeMethod('swiftCustomMethod').then((sss)=>{print(sss)});
-    //
-    //   // desLog = 'result is  $result';
-    //   // print(result);
-    // } on PlatformException catch (e) {
-    //   desLog = "Failed reason: '${e.message}'";
-    //   print(desLog);
-    // }
-    //
-    //
-    // setState(() {
-    //   desLog;
-    // });
-
-    return await channel.invokeMethod('swiftCustomMethod');
-
+  // -------------flutter提供IMP功能-----------------
+  Future<dynamic> platformCallHandler(MethodCall call) async {
+    switch (call.method) {
+      case 'flutterCustomMethod':
+        {
+          try {
+            return flutterCustomMethod(
+                call);
+          } on PlatformException catch (e) {
+            return PlatformException(code: '1002', message: "出现异常");
+          }
+          break;
+        }
+    }
   }
 
-  // -------------flutter提供的功能-----------------
+  Future<dynamic> flutterCustomMethod(MethodCall call) async {
+    print('flutterCustomMethod ${call.arguments}');
+    return 89;
+  }
 
-  channel.setMethodCallHandler((call) async {
-  ddddd?.call(call);
-  });
+  // -------------Native提供IMP功能-----------------
+  Future<int?> _swiftCustomMethod() async {
+    String desLog = '';
+    Map<String, int> params = {'age': 23};
+    final result;
+    try {
+      //params Flutter>Native 数据正向
+      //result Native>Flutter 数据逆向
+      //方案1(swiftCustomMethod Native IMP)
+      // await channel.invokeMethod('swiftCustomMethod',params).then((result){
+      //   print(result);
+      // });
+      //方案2(swiftCustomMethod Native IMP)
+      result = await channel.invokeMethod('swiftCustomMethod', params);
+      print('result is $result');
+      return result;
+    } on PlatformException catch (e) {
+      desLog = "Failed reason: '${e.message}'";
+      print(desLog);
+    }
 
-
-  Future<int> ddddd(MethodCall call) async {
-    print('dddddd');
-  };
-
-
-
-
-
-
-
-
-
-
-
-
-
+    setState(() {
+      desLog;
+    });
+  }
 
   @override
   //状态SW插件子类的本身执行区中重构插件编译build事件实例(系统自动触发)
@@ -92,8 +89,12 @@ class _PageBState extends State<PageB> {
     //渲染有关的Scaffold渲染插件实例(整个界面的底跟插件实例)
 
     //获取屏幕的物理尺寸(px)及像素密度
-    var physicalSize = View.of(context).physicalSize;
-    var devicePixelRatio = View.of(context).devicePixelRatio;
+    var physicalSize = View
+        .of(context)
+        .physicalSize;
+    var devicePixelRatio = View
+        .of(context)
+        .devicePixelRatio;
     //计算出ios/android屏幕宽高 (pt/dp)
     var screenW = physicalSize.width / devicePixelRatio;
     var screenH = physicalSize.height / devicePixelRatio;
@@ -102,10 +103,17 @@ class _PageBState extends State<PageB> {
       print('screenW:$screenW screenH:$screenH');
     }
 
+    //flutter提供IMP
+    //platformCallHandler注入channel通道回调表(通道另端完成信息传递则触发回调表中当前端的回调函数)
+    channel.setMethodCallHandler(platformCallHandler);
+
     return Scaffold(
       resizeToAvoidBottomInset: true,
       appBar: AppBar(
-          backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+          backgroundColor: Theme
+              .of(context)
+              .colorScheme
+              .inversePrimary,
           title: Text(widget.title),
           actions: [
             IconButton(onPressed: () {}, icon: const Icon(Icons.settings)),
@@ -117,16 +125,15 @@ class _PageBState extends State<PageB> {
           child: SingleChildScrollView(
               scrollDirection: Axis.vertical,
               padding:
-                  const EdgeInsets.only(left: 50, right: 50), //边际填充(内缩)(非负)
+              const EdgeInsets.only(left: 50, right: 50), //边际填充(内缩)(非负)
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   const Text(
                     '欢迎来到B界面',
                   ),
-                  ChannelTest(onPress: (){
+                  ChannelTest(onPress: () {
                     _swiftCustomMethod();
-
                   }),
                   SizedBox(
                     height: 40,
@@ -139,9 +146,9 @@ class _PageBState extends State<PageB> {
                             fontSize: 17,
                             color: Colors.black)),
                         foregroundColor:
-                            MaterialStateProperty.all(Colors.black),
+                        MaterialStateProperty.all(Colors.black),
                         mouseCursor:
-                            MaterialStateProperty.all(SystemMouseCursors.wait),
+                        MaterialStateProperty.all(SystemMouseCursors.wait),
                       ),
                       child: const Text('文本按钮'),
                     ), //文本按钮
@@ -153,11 +160,11 @@ class _PageBState extends State<PageB> {
                         child: Text('阴影按钮'),
                         style: ButtonStyle(
                             backgroundColor:
-                                MaterialStateProperty.all(Colors.red),
+                            MaterialStateProperty.all(Colors.red),
                             foregroundColor:
-                                MaterialStateProperty.all(Colors.white),
+                            MaterialStateProperty.all(Colors.white),
                             elevation: MaterialStateProperty.all(50) //阴影
-                            ),
+                        ),
                       ),
                       // SizedBox(
                       //   width: screenW*4,
@@ -200,7 +207,7 @@ class _PageBState extends State<PageB> {
                             shape: MaterialStateProperty.all(
                               const RoundedRectangleBorder(
                                 borderRadius:
-                                    BorderRadius.all(Radius.circular(20.0)),
+                                BorderRadius.all(Radius.circular(20.0)),
                               ),
                             ),
                             textStyle: MaterialStateProperty.all(
@@ -503,6 +510,7 @@ class ChannelTest extends StatelessWidget {
   //自调用(Self)
   //(自定义)待配置公开属性默认可选
   const ChannelTest({super.key, this.onPress});
+
   //void Function()? 事件本身所遵循的结构特征
   final void Function()? onPress;
 
@@ -510,17 +518,21 @@ class ChannelTest extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 40,
-      child: ElevatedButton(
-        onPressed: onPress,
-        style: ButtonStyle(
-          shape: MaterialStateProperty.all(
-              const CircleBorder(side: BorderSide(color: Colors.white))),
-          textStyle: MaterialStateProperty.all(const TextStyle(
-              backgroundColor: Colors.transparent, fontSize: 17)),
-        ),
-        child: const Text('通道'),
-      ), //凸起按钮
+      height: 60,
+      child: ButtonBar(
+        children: [
+          ElevatedButton(
+            onPressed: onPress,
+            style: ButtonStyle(
+              shape: MaterialStateProperty.all(
+                  const CircleBorder(side: BorderSide(color: Colors.white))),
+              textStyle: MaterialStateProperty.all(const TextStyle(
+                  backgroundColor: Colors.transparent, fontSize: 17)),
+            ),
+            child: const Text('通道Native提供IMP'),
+          ),
+        ],
+      ),
     );
   }
 

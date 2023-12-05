@@ -56,6 +56,7 @@ import 'custom/PageAlgorithm.dart';
 //1 元类规则区(栈):多 内容堆区
 //GitLab 或 GitHub  勾联着Git环境的 云 Lab 或Hub 托管平台
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
   //Dart日志函数
   runApp(const MyApp());
 }
