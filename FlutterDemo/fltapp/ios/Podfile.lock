@@ -5,6 +5,8 @@ PODS:
   - AppAuth/Core (1.6.2)
   - AppAuth/ExternalUserAgent (1.6.2):
     - AppAuth/Core
+  - Chrysan (2.0.7):
+    - SnapKit (~> 5.0)
   - Flutter (1.0.0)
   - google_sign_in_ios (0.0.1):
     - Flutter
@@ -20,6 +22,7 @@ PODS:
   - SnapKit (5.6.0)
 
 DEPENDENCIES:
+  - Chrysan
   - Flutter (from `Flutter`)
   - google_sign_in_ios (from `.symlinks/plugins/google_sign_in_ios/ios`)
   - SnapKit
@@ -27,6 +30,7 @@ DEPENDENCIES:
 SPEC REPOS:
   trunk:
     - AppAuth
+    - Chrysan
     - GoogleSignIn
     - GTMAppAuth
     - GTMSessionFetcher
@@ -40,6 +44,7 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   AppAuth: 3bb1d1cd9340bd09f5ed189fb00b1cc28e1e8570
+  Chrysan: c339c73bd7b666e66249b9f6f6028f1b05efabe2
   Flutter: f04841e97a9d0b0a8025694d0796dd46242b2854
   google_sign_in_ios: 1256ff9d941db546373826966720b0c24804bcdd
   GoogleSignIn: 5651ce3a61e56ca864160e79b484cd9ed3f49b7a
@@ -47,6 +52,6 @@ SPEC CHECKSUMS:
   GTMSessionFetcher: 3a63d75eecd6aa32c2fc79f578064e1214dfdec2
   SnapKit: e01d52ebb8ddbc333eefe2132acf85c8227d9c25
 
-PODFILE CHECKSUM: 42d15e0c0d9e44d4244b08a32cb065f332692dbe
+PODFILE CHECKSUM: 2a616ea70cb732ae899d9544a1c2fb4ae9ededad
 
 COCOAPODS: 1.11.2
