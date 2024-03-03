@@ -109,6 +109,16 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                     //正式的触发路由跳转
                     Navigator.of(context).pushNamed('/e');
                   }),
+                  TextButton(
+                    autofocus: true,
+                    onPressed: (){
+                      setState(() {
+                        //正式的触发路由跳转
+                        Navigator.of(context).pushNamed('/b');
+                      });
+                    },
+                    child: const Text('下一页'),
+                  ),
                 ],
               )), //FadeTransition过渡动画呈现插件(其内child对应的插件(默认不可见(当主机controller执行controller.forward();生效命令后child对应的内嵌插件逐步动画呈现)))
         ),
@@ -125,15 +135,12 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
   //函数级构造器(级别低于类级别)
   void _incrementCounter() {
     //(setState状态写入事件)引用码更改状态环境：执行引用setState的坑回调事件内的回调指令码后重运行同类结构中的编译bulid事件的渲染命令界面渲染的更新
-    // setState(() {
-    //   Navigator.of(context).pushNamed('/a');
-    //   _counter++;
-    //   controller.forward();
-    // });
     setState(() {
-      //正式的触发路由跳转
-      Navigator.of(context).pushNamed('/b');
+      // Navigator.of(context).pushNamed('/a');
+      _counter++;
+      // controller.forward();
     });
+
   }
 }
 
@@ -154,7 +161,7 @@ class AlgorithmStructure extends StatelessWidget {
       child: TextButton(
         autofocus: true,
         onPressed: onPress,
-        child: const Text('算法Algorithm'),
+        child: const Text('算法Algorithm(flutter页)'),
       ),
     );
   }

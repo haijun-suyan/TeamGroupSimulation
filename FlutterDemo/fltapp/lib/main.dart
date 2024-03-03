@@ -97,16 +97,16 @@ class MyApp extends StatelessWidget {
         home: const MyHomePage(title: Strings.welcomeMessage),
         routes: <String, WidgetBuilder>{
           //路由元素a
-          '/a': (BuildContext context) => const PageA(title: '图加载'),
+          '/a': (BuildContext context) => const PageA(title: '图加载(flutter页)'),
           //路由元素b
-          '/b': (BuildContext context) => const PageB(title: 'Button按钮插件'),
+          '/b': (BuildContext context) => const PageB(title: 'Button按钮插件(flutter页)'),
           //路由元素c
-          '/c': (BuildContext context) => const PageC(title: 'pageC'),
+          '/c': (BuildContext context) => const PageC(title: 'pageC(flutter页)'),
           //路由元素d
-          '/d': (BuildContext context) => const PageD(title: 'ListView表视图'),
+          '/d': (BuildContext context) => const PageD(title: 'ListView表视图(flutter页)'),
           //路由元素e
           '/e': (BuildContext context) =>
-              const PageAlgorithm(title: 'Algorithm算法')
+              const PageAlgorithm(title: 'Algorithm算法(flutter页)')
         });
   }
 }

@@ -48,7 +48,7 @@ class _PageCState extends State<PageC> {
               mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
                 const Text(
-                  '欢迎来到C界面',
+                  '欢迎来到C界面(flutter页)',
                   style: TextStyle(fontSize: 17),
                   textAlign: TextAlign.left,
                 ),

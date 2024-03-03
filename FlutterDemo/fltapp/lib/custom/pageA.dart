@@ -70,7 +70,7 @@ class _PageAState extends State<PageA> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 const Text(
-                  '欢迎来到A界面',
+                  '欢迎来到A界面(flutter页)',
                   style: TextStyle(fontSize: 17),
                 ),
                 const Text('SingleChildScrollView垂直滚动'),

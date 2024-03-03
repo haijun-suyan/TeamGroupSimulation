@@ -1,5 +1,6 @@
 import UIKit
 import Flutter
+import Chrysan
 
 @UIApplicationMain
 @objc class AppDelegate: FlutterAppDelegate {
@@ -20,11 +21,15 @@ import Flutter
                     //只有存在reslt(returnValue)正常命令时flutter中invokeMethod命令才出现有效值(避免flutter阻塞)
                     reslt(returnValue);
                 }
-
-
-
                 //                reslt(FlutterError(code: "UNAVAILABLE", message: "Battery info unavailable", details: nil));
-            } else {
+            } else if call.method=="swiftCustomMod" {
+                if call.arguments != nil  {
+                    self?.swiftCustomMod();
+                    //Native中IMP的结果值逆向传递至flutter
+                    //只有存在reslt(returnValue)正常命令时flutter中invokeMethod命令才出现有效值(避免flutter阻塞)
+                    reslt(1);
+                }
+            }else {
                 reslt(FlutterMethodNotImplemented);
             }
 
@@ -41,14 +46,17 @@ import Flutter
     //平台Swift 实现IMP
     func swiftCustomMethod(age:Int)->Int {
         print("swiftCustomMethod",age);
-
         let controller: FlutterViewController = (window?.rootViewController as? FlutterViewController)!;
+        controller.chrysan.showHUD(Status(id:.success, message: "ReceivedDataFromFlutter:\(age)", progress: nil, progressText: nil), hideAfterDelay: 4.0)
+        return 88;
+    }
 
+    //平台Swift 原生构建IMP
+    func swiftCustomMod(){
+        let controller: FlutterViewController = (window?.rootViewController as? FlutterViewController)!;
         let vc = NativeViewController()
         vc.hidesBottomBarWhenPushed = true//官方自带
-        controller.present(vc, animated: false) {
-    }
-        return 88;
+        controller.present(vc, animated: false) {}
     }
 
 

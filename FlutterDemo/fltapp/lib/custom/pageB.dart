@@ -35,7 +35,7 @@ class _PageBState extends State<PageB> {
       'plugins.flutter.io/google_sign_in_ios');
 
 
-  // -------------flutter提供IMP功能-----------------
+  // -------------(原生页面实现操作)flutter提供IMP功能(数据的双向通信)-----------------
   Future<dynamic> platformCallHandler(MethodCall call) async {
     switch (call.method) {
       case 'flutterCustomMethod':
@@ -53,10 +53,10 @@ class _PageBState extends State<PageB> {
 
   Future<dynamic> flutterCustomMethod(MethodCall call) async {
     print('flutterCustomMethod ${call.arguments}');
-    return 89;
+    return 100;
   }
 
-  // -------------Native提供IMP功能-----------------
+  // -------------(flutter页面中实现操作)Native提供IMP功能(数据的双向通信)-----------------
   Future<int?> _swiftCustomMethod() async {
     String desLog = '';
     Map<String, int> params = {'age': 23};
@@ -70,6 +70,24 @@ class _PageBState extends State<PageB> {
       // });
       //方案2(swiftCustomMethod Native IMP)
       result = await channel.invokeMethod('swiftCustomMethod', params);
+      print('result is $result');
+      return result;
+    } on PlatformException catch (e) {
+      desLog = "Failed reason: '${e.message}'";
+      print(desLog);
+    }
+
+    setState(() {
+      desLog;
+    });
+  }
+
+  Future<int?> _swiftCustomMod() async {
+    String desLog = '';
+    Map<String, Map> params = {};
+    final result;
+    try {
+      result = await channel.invokeMethod('swiftCustomMod',params);
       print('result is $result');
       return result;
     } on PlatformException catch (e) {
@@ -130,10 +148,13 @@ class _PageBState extends State<PageB> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   const Text(
-                    '欢迎来到B界面',
+                    '欢迎来到B界面(flutter页)',
                   ),
                   ChannelTest(onPress: () {
                     _swiftCustomMethod();
+                  }),
+                  ToNativeUI(onPress: () {
+                    _swiftCustomMod();
                   }),
                   SizedBox(
                     height: 40,
@@ -529,7 +550,7 @@ class ChannelTest extends StatelessWidget {
               textStyle: MaterialStateProperty.all(const TextStyle(
                   backgroundColor: Colors.transparent, fontSize: 17)),
             ),
-            child: const Text('通道Native提供IMP'),
+            child: const Text('事件通道之Native层提供IMP'),
           ),
         ],
       ),
@@ -540,4 +561,37 @@ class ChannelTest extends StatelessWidget {
     return await rootBundle
         .loadString('lib/src/assets/lover_kiss.png.dataset/lover_kiss.json');
   }
+}
+
+//构造器类(组件)
+//(自定义)插件 集成类 > (自定义)插件 实例
+//StatelessWidget(常规型)无态SW插件>充当子层插件(上层内嵌插件)>未直接关联状态 (不依赖状态配置信息>间接内嵌渲染插件)
+class ToNativeUI extends StatelessWidget {
+  //自调用(Self)
+  //(自定义)待配置公开属性默认可选
+  const ToNativeUI({super.key, this.onPress});
+
+  //void Function()? 事件本身所遵循的结构特征
+  final void Function()? onPress;
+
+  //生产编码
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: 60,
+      child: ButtonBar(
+        children: [
+          ElevatedButton(
+            onPressed: onPress,
+            style: ButtonStyle(
+              textStyle: MaterialStateProperty.all(const TextStyle(
+                  backgroundColor: Colors.transparent, fontSize: 17)),
+            ),
+            child: const Text('切换进入NativeUI原生页'),
+          ),
+        ],
+      ),
+    );
+  }
+
 }
