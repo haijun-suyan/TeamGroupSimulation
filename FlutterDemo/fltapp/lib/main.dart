@@ -11,6 +11,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:english_words/english_words.dart';
 import 'package:transparent_image/transparent_image.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+//开源库
+import 'package:mockito/mockito.dart';
+import 'package:json_serializable/json_serializable.dart';
+import 'package:build_runner/build_runner.dart';
 
 //自定义Widget文件(库)
 import 'custom/MyHomePage.dart';
