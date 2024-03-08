@@ -43,7 +43,7 @@ dependencies:
   transparent_image: ^2.0.0
   # flutter_screenutil三方开源包(屏幕适配工具)
   google_sign_in: ^5.0.0
-  #
+  #搭建测试数据
   mockito: ^5.4.0
   #
   json_serializable: ^6.7.1
