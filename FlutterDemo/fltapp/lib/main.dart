@@ -1,20 +1,9 @@
 // MaterialDesign库
-import 'dart:ui';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 //更基本Widget：Widgets集
-import 'package:flutter/widgets.dart';
 import 'dart:async' show Future;
-import 'package:flutter/services.dart' show rootBundle;
 //ios样式Widget(某些定制化独特风格)：Cupertino库
-import 'package:flutter/cupertino.dart';
-import 'package:english_words/english_words.dart';
-import 'package:transparent_image/transparent_image.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
 //开源库
-import 'package:mockito/mockito.dart';
-import 'package:json_serializable/json_serializable.dart';
-import 'package:build_runner/build_runner.dart';
 
 //自定义Widget文件(库)
 import 'custom/MyHomePage.dart';

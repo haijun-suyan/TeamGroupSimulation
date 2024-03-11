@@ -1,6 +1,5 @@
 //flutter项目 dart文件参考模版
 // MaterialDesign库
-import 'dart:ui';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
@@ -31,7 +30,7 @@ typedef MethodCallHandler = Future<dynamic> Function(MethodCall call)?;
 class _PageBState extends State<PageB> {
 
   //获取原生所构建出的通道channel(通道名即通道原生对应的名)
-  static const channel = const MethodChannel(
+  static const channel = MethodChannel(
       'plugins.flutter.io/google_sign_in_ios');
 
 
@@ -43,7 +42,7 @@ class _PageBState extends State<PageB> {
           try {
             return flutterCustomMethod(
                 call);
-          } on PlatformException catch (e) {
+          } on PlatformException {
             return PlatformException(code: '1002', message: "出现异常");
           }
           break;
@@ -80,6 +79,7 @@ class _PageBState extends State<PageB> {
     setState(() {
       desLog;
     });
+    return null;
   }
 
   Future<int?> _swiftCustomMod() async {
@@ -98,6 +98,7 @@ class _PageBState extends State<PageB> {
     setState(() {
       desLog;
     });
+    return null;
   }
 
   @override
@@ -178,7 +179,6 @@ class _PageBState extends State<PageB> {
                     children: [
                       ElevatedButton(
                         onPressed: () {},
-                        child: Text('阴影按钮'),
                         style: ButtonStyle(
                             backgroundColor:
                             MaterialStateProperty.all(Colors.red),
@@ -186,6 +186,7 @@ class _PageBState extends State<PageB> {
                             MaterialStateProperty.all(Colors.white),
                             elevation: MaterialStateProperty.all(50) //阴影
                         ),
+                        child: const Text('阴影按钮'),
                       ),
                       // SizedBox(
                       //   width: screenW*4,

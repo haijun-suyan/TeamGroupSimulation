@@ -42,7 +42,7 @@ dependencies:
   # transparent_image三方开源包(占位透明图 图片加载库)
   transparent_image: ^2.0.0
   # flutter_screenutil三方开源包(屏幕适配工具)
-  google_sign_in: ^5.0.0
+  google_sign_in: ^5.4.4
   #搭建测试数据
   mockito: ^5.4.0
   #

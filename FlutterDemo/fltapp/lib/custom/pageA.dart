@@ -1,16 +1,13 @@
 //flutter项目 dart文件参考模版
 //界面文件层
 // MaterialDesign库
-import 'dart:ui';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 //更基本Widget：Widgets集
-import 'package:flutter/widgets.dart';
 import 'dart:async' show Future;
 import 'package:flutter/services.dart' show rootBundle;
 
 //ios样式Widget(某些定制化独特风格)：Cupertino库
-import 'package:flutter/cupertino.dart';
 import 'package:transparent_image/transparent_image.dart';
 //自定义Widget文件(库)
 
