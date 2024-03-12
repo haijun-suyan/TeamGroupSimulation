@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 //自定义Widget文件(库)
 
 //自定义辅助文件
+import 'package:flutter_boost/flutter_boost.dart';
 
 const cities = [
   "南宁",
@@ -103,7 +104,10 @@ class _PageDState extends State<PageD> {
   //函数级构造器(级别低于类级别)
   void _nextPage() {
     //正式的执行路由跳转
-    Navigator.of(context).pushNamed('/b');
+    //路由跳转系统的
+    // Navigator.of(context).pushNamed('/b');
+    //路由跳转Boost插件的
+    BoostNavigator.instance.push("pageB");
     //(setState状态写入事件)引用码更改状态环境：执行引用setState的坑回调事件内的回调指令码后重运行同类结构中的编译bulid事件的渲染命令界面渲染的更新
     // setState(() {
     // });

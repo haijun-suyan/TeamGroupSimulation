@@ -1,9 +1,11 @@
 // MaterialDesign库
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 //更基本Widget：Widgets集
 import 'dart:async' show Future;
 //ios样式Widget(某些定制化独特风格)：Cupertino库
 //开源库
+import 'package:flutter/cupertino.dart';
 
 //自定义Widget文件(库)
 import 'custom/MyHomePage.dart';
@@ -12,6 +14,13 @@ import 'custom/pageB.dart';
 import 'custom/pageC.dart';
 import 'custom/pageD.dart';
 import 'custom/PageAlgorithm.dart';
+
+import 'custom/splash_page.dart';
+import 'custom/other_page.dart';
+
+// flutter_boost
+import 'dart:io';
+import 'package:flutter_boost/flutter_boost.dart';
 
 //应用最终的效果现象：本质上决定于内存 而非别名符(别名符具有任意性)
 //响应式开发特性：1.API调用 2.渲染快速重载
@@ -49,60 +58,222 @@ import 'custom/PageAlgorithm.dart';
 //1 元类规则区(栈):多 内容堆区
 //GitLab 或 GitHub  勾联着Git环境的 云 Lab 或Hub 托管平台
 void main() {
-  WidgetsFlutterBinding.ensureInitialized();
+  PageVisibilityBinding.instance
+      .addGlobalObserver(AppGlobalPageVisibilityObserver());
+  CustomFlutterBinding();
   //Dart日志函数
-  runApp(const MyApp());
+  runApp( MyApp());
 }
 
-//内容数据资源
-//MyApp 特殊的无态SW插件 类(构造器) (仅单次执行(应用刚启动时执行1次))
-//(自定义)MyApp特殊的无态SW插件 集成类 > (自定义)无态 SW插件实例
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class AppGlobalPageVisibilityObserver extends GlobalPageVisibilityObserver {
+  @override
+  void onPagePush(Route<dynamic> route) {
+    Logger.log(
+        'boost_lifecycle: AppGlobalPageVisibilityObserver.onPageCreate route:${route.settings.name}');
+  }
 
-  get plural => null;
+  @override
+  void onPageShow(Route<dynamic> route) {
+    Logger.log(
+        'boost_lifecycle: AppGlobalPageVisibilityObserver.onPageShow route:${route.settings.name}');
+  }
+
+  @override
+  void onPageHide(Route<dynamic> route) {
+    Logger.log(
+        'boost_lifecycle: AppGlobalPageVisibilityObserver.onPageHide route:${route.settings.name}');
+  }
+
+  @override
+  void onPagePop(Route<dynamic> route) {
+    Logger.log(
+        'boost_lifecycle: AppGlobalPageVisibilityObserver.onPageDestroy route:${route.settings.name}');
+  }
+
+  @override
+  void onForeground(Route route) {
+    Logger.log(
+        'boost_lifecycle: AppGlobalPageVisibilityObserver.onForeground route:${route.settings.name}');
+  }
+
+  @override
+  void onBackground(Route<dynamic> route) {
+    Logger.log(
+        'boost_lifecycle: AppGlobalPageVisibilityObserver.onBackground route:${route.settings.name}');
+  }
+}
+
+class CustomFlutterBinding extends WidgetsFlutterBinding
+    with BoostFlutterBinding {
+
+}
+
+class MyApp extends StatefulWidget {
+  @override
+  _MyAppState createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  //   设置与源生跨层交互的flutter页
+  // 举例：'splash’和’otherPage’属性对应跳转路径
+  // flutter页属性别名
+  static Map<String,FlutterBoostRouteFactory> routerMap = {
+    'splash':(settings,uniqueId){
+      // MaterialFlags
+      return PageRouteBuilder<dynamic>(
+          settings: settings,
+          pageBuilder: (context, __, ___) => SplashPage());
+    },
+    'otherPage':(settings,uniqueId) {
+      return PageRouteBuilder<dynamic>(
+          settings: settings,
+          pageBuilder: (context, __, ___) => OtherPage());
+    },
+    'myHomePage':(settings,uniqueId) {
+      return PageRouteBuilder<dynamic>(
+          settings: settings,
+          pageBuilder: (context, __, ___) => const MyHomePage(title: Strings.welcomeMessage));
+    },
+    'pageA':(settings,uniqueId) {
+      return PageRouteBuilder<dynamic>(
+          settings: settings,
+          pageBuilder: (context, __, ___) => const PageA(title: '图加载(flutter页)'));
+    },
+    'pageAlgorithm':(settings,uniqueId) {
+      return PageRouteBuilder<dynamic>(
+          settings: settings,
+          pageBuilder: (context, __, ___) => const PageAlgorithm(title: 'Algorithm算法(flutter页)'));
+    },
+    'pageB':(settings,uniqueId) {
+      return PageRouteBuilder<dynamic>(
+          settings: settings,
+          pageBuilder: (context, __, ___) => const PageB(title: 'Button按钮插件(flutter页)'));
+    },
+    'pageC':(settings,uniqueId) {
+      return PageRouteBuilder<dynamic>(
+          settings: settings,
+          pageBuilder: (context, __, ___) => const PageC(title: 'pageC(flutter页)'));
+    },
+    'pageD':(settings,uniqueId) {
+      return PageRouteBuilder<dynamic>(
+          settings: settings,
+          pageBuilder: (context, __, ___) => const PageD(title: 'ListView表视图(flutter页)'));
+    }
+  };
+
+  //   设置flutterBoost路由工厂
+  Route<dynamic>? routeFactory(RouteSettings settings,  String? uniqueId) {
+    FlutterBoostRouteFactory? func = routerMap[settings.name];
+    print("settings.name: ${settings.name}");
+    if (func == null) {
+      return null;
+    }
+    return func(settings,uniqueId);
+  }
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  Widget appBuilder(Widget home) {
+    // theme属性必须配置
+    return MaterialApp(
+      title: '庄佩云',
+      theme: ThemeData(
+        //数据源
+        colorScheme: ColorScheme.fromSeed(
+            seedColor: Colors.pink, inversePrimary: Colors.orange),
+        useMaterial3: true,
+      ),
+      routes: <String, WidgetBuilder>{
+        //路由元素a
+        '/a': (BuildContext context) => const PageA(title: '图加载(flutter页)'),
+        //路由元素b
+        '/b': (BuildContext context) => const PageB(title: 'Button按钮插件(flutter页)'),
+        //路由元素c
+        '/c': (BuildContext context) => const PageC(title: 'pageC(flutter页)'),
+        //路由元素d
+        '/d': (BuildContext context) => const PageD(title: 'ListView表视图(flutter页)'),
+        //路由元素e
+        '/e': (BuildContext context) =>
+        const PageAlgorithm(title: 'Algorithm算法(flutter页)')
+      },
+      home: home,
+      debugShowCheckedModeBanner:true,
+      //   必须加上builder属性，否则showDialog等出问题
+      builder: (_,__) {
+        return home;
+      },
+    );
+  }
 
   // 应用程序的根主入口
   @override
   //重构插件编译build事件实例(系统自动触发)
   Widget build(BuildContext context) {
     //kDebugMode调试模式
-
-
-    return MaterialApp(
-        // localizationsDelegates: [
-        //   MaterialLocalizationItDelegate(),
-        //   GlobalMaterialLocalizations.delegate,
-        //   GlobalWidgetsLocalizations.delegate,
-        // ], //实际的本地化值
-        // supportedLocales: const [
-        //   Locale('zh', 'CN'), //China
-        //   Locale('en', 'US'), //English
-        //   Locale('he', 'IL'), //Hebrew
-        // ], //应用App已支持哪些地区
-        title: '庄佩云',
-        theme: ThemeData(
-          //数据源
-          colorScheme: ColorScheme.fromSeed(
-              seedColor: Colors.pink, inversePrimary: Colors.orange),
-          useMaterial3: true,
-        ),
-        home: const MyHomePage(title: Strings.welcomeMessage),
-        routes: <String, WidgetBuilder>{
-          //路由元素a
-          '/a': (BuildContext context) => const PageA(title: '图加载(flutter页)'),
-          //路由元素b
-          '/b': (BuildContext context) => const PageB(title: 'Button按钮插件(flutter页)'),
-          //路由元素c
-          '/c': (BuildContext context) => const PageC(title: 'pageC(flutter页)'),
-          //路由元素d
-          '/d': (BuildContext context) => const PageD(title: 'ListView表视图(flutter页)'),
-          //路由元素e
-          '/e': (BuildContext context) =>
-              const PageAlgorithm(title: 'Algorithm算法(flutter页)')
-        });
+    return FlutterBoostApp(
+      // 设置路由
+      routeFactory,
+      appBuilder: appBuilder,
+      initialRoute: 'splash',
+    );
   }
 }
+
+class BoostNavigatorObserver extends NavigatorObserver {
+  @override
+  void didPush(Route<dynamic> route, Route<dynamic>? previousRoute) {
+    print('boost-didPush${route.settings.name}');
+  }
+
+  @override
+  void didPop(Route<dynamic> route, Route<dynamic>? previousRoute) {
+    print('boost-didPop${route.settings.name}');
+  }
+
+  @override
+  void didRemove(Route<dynamic> route, Route<dynamic>? previousRoute) {
+
+    print('boost-didRemove${route.settings.name}');
+  }
+
+  @override
+  void didStartUserGesture(Route<dynamic> route, Route<dynamic>? previousRoute) {
+    print('boost-didStartUserGesture${route.settings.name}');
+  }
+}
+
+//内容数据资源
+//MyApp 特殊的无态SW插件 类(构造器) (仅单次执行(应用刚启动时执行1次))
+//(自定义)MyApp特殊的无态SW插件 集成类 > (自定义)无态 SW插件实例
+// class MyApp extends StatelessWidget {
+//   const MyApp({super.key});
+//
+//   get plural => null;
+//
+//   // 应用程序的根主入口
+//   @override
+//   //重构插件编译build事件实例(系统自动触发)
+//   Widget build(BuildContext context) {
+//     //kDebugMode调试模式
+//     return MaterialApp(
+//         // localizationsDelegates: [
+//         //   MaterialLocalizationItDelegate(),
+//         //   GlobalMaterialLocalizations.delegate,
+//         //   GlobalWidgetsLocalizations.delegate,
+//         // ], //实际的本地化值
+//         // supportedLocales: const [
+//         //   Locale('zh', 'CN'), //China
+//         //   Locale('en', 'US'), //English
+//         //   Locale('he', 'IL'), //Hebrew
+//         // ], //应用App已支持哪些地区
+//
+//         home: const MyHomePage(title: Strings.welcomeMessage),
+//         );
+//   }
+// }
 
 
 // InfosLocalizationsDelegate

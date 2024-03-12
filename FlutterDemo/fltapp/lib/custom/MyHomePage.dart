@@ -3,6 +3,7 @@
 // MaterialDesign库
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+
 //更基本Widget：Widgets集
 
 //ios样式Widget(某些定制化独特风格)：Cupertino库
@@ -10,6 +11,7 @@ import 'package:english_words/english_words.dart';
 //自定义Widget文件(库)
 
 //自定义辅助文件
+import 'package:flutter_boost/flutter_boost.dart';
 
 //内容数据资源
 //(效果屏幕界面)有态SW插件 类(构造器)
@@ -102,14 +104,16 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                   ),
                   AlgorithmStructure(onPress: () {
                     //正式的触发路由跳转
-                    Navigator.of(context).pushNamed('/e');
+                    // Navigator.of(context).pushNamed('/e');
+                    BoostNavigator.instance.push("pageAlgorithm");
                   }),
                   TextButton(
                     autofocus: true,
                     onPressed: (){
                       setState(() {
                         //正式的触发路由跳转
-                        Navigator.of(context).pushNamed('/b');
+                        // Navigator.of(context).pushNamed('/b');
+                        BoostNavigator.instance.push("pageB");
                       });
                     },
                     child: const Text('下一页'),

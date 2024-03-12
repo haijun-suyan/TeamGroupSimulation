@@ -27,9 +27,20 @@ require File.expand_path(File.join('packages', 'flutter_tools', 'bin', 'podhelpe
 
 flutter_ios_podfile_setup
 
+# 添加FlutterBoost依赖项
+def flutter_boost_pods
+#  pod 'BoostBlankModule', :path => '../flutter_boost_blank_module'
+#  pod 'FlutterBoost', :path => '../flutter_boost'
+  pod 'FBSDKCoreKit', '~> 5.14.0'
+  pod 'FBSDKLoginKit', '~> 5.14.0'
+  pod 'FBSDKShareKit', '~> 5.14.0'
+end
+
 target 'Runner' do
   use_frameworks!
   use_modular_headers!
+  flutter_boost_pods
+# 其他配置
   pod 'SnapKit'
 # Chrysan菊花浮图
   pod 'Chrysan'
@@ -42,5 +53,10 @@ end
 post_install do |installer|
   installer.pods_project.targets.each do |target|
     flutter_additional_ios_build_settings(target)
+    if target.name == 'Flutter'
+          target.build_configurations.each do |config|
+            config.build_settings['ENABLE_BITCODE'] = 'NO'
+          end
+        end
   end
 end

@@ -5,33 +5,34 @@ import 'package:flutter_boost/flutter_boost.dart';
 class OtherPage extends StatefulWidget {
 
   @override
-  _SplashPageState createState() => _SplashPageState();
+  _OtherPageState createState() => _OtherPageState();
 }
 
-class _SplashPageState extends State<OtherPage> {
+class _OtherPageState extends State<OtherPage> {
 
   @override
   void initState() {
     super.initState();
-    Logger.log('boost-SplashPage $mounted');
+    Logger.log('boost-OtherPage $mounted');
   }
 
   @override
   Widget build(BuildContext context) {
-    Logger.log('boost-SplashPage $mounted');
+    Logger.log('boost-OtherPage $mounted');
     return Scaffold(
       appBar: AppBar(
-        title:  Text("Flutter 页面"),
+        title:  Text("Flutter OtherPage页"),
       ),
       body: Flex(
         direction: Axis.vertical,
         children: [
           GestureDetector(
             onTap: (){
-              BoostNavigator.instance.push("native");
+              //name: "原生页的解析别名"
+              BoostNavigator.instance.push("NativeViewControllerTwo");
             },
             child: Text(
-              "这是另外的源生页面"
+              "切换进入NativeTwo"
             ),
           )
         ],

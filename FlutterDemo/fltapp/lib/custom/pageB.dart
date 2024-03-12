@@ -11,6 +11,7 @@ import 'package:flutter/services.dart';
 //自定义Widget文件(库)
 
 //自定义辅助文件
+import 'package:flutter_boost/flutter_boost.dart';
 
 //内容数据资源
 class PageB extends StatefulWidget {
@@ -516,11 +517,13 @@ class _PageBState extends State<PageB> {
     //(setState状态写入事件)引用码更改状态环境：执行引用setState的坑回调事件内的回调指令码后重运行同类结构中的编译bulid事件的渲染命令界面渲染的更新
     // setState(() {
     //   Navigator.of(context).pushNamed('/a');
+    // BoostNavigator.instance.push("pageA");
     //   _counter++;
     //   controller.forward();
     // });
     setState(() {
-      Navigator.of(context).pushNamed('/c');
+      // Navigator.of(context).pushNamed('/c');
+      BoostNavigator.instance.push("pageC");
     });
   }
 }

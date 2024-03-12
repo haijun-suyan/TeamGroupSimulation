@@ -7,7 +7,23 @@ PODS:
     - AppAuth/Core
   - Chrysan (2.0.7):
     - SnapKit (~> 5.0)
+  - FBSDKCoreKit (5.14.0):
+    - FBSDKCoreKit/Basics (= 5.14.0)
+    - FBSDKCoreKit/Core (= 5.14.0)
+  - FBSDKCoreKit/Basics (5.14.0)
+  - FBSDKCoreKit/Core (5.14.0):
+    - FBSDKCoreKit/Basics
+  - FBSDKLoginKit (5.14.0):
+    - FBSDKLoginKit/Login (= 5.14.0)
+  - FBSDKLoginKit/Login (5.14.0):
+    - FBSDKCoreKit (~> 5.0)
+  - FBSDKShareKit (5.14.0):
+    - FBSDKShareKit/Share (= 5.14.0)
+  - FBSDKShareKit/Share (5.14.0):
+    - FBSDKCoreKit (~> 5.0)
   - Flutter (1.0.0)
+  - flutter_boost (0.0.2):
+    - Flutter
   - google_sign_in_ios (0.0.1):
     - Flutter
     - GoogleSignIn (~> 7.0)
@@ -23,7 +39,11 @@ PODS:
 
 DEPENDENCIES:
   - Chrysan
+  - FBSDKCoreKit (~> 5.14.0)
+  - FBSDKLoginKit (~> 5.14.0)
+  - FBSDKShareKit (~> 5.14.0)
   - Flutter (from `Flutter`)
+  - flutter_boost (from `.symlinks/plugins/flutter_boost/ios`)
   - google_sign_in_ios (from `.symlinks/plugins/google_sign_in_ios/ios`)
   - SnapKit
 
@@ -31,6 +51,9 @@ SPEC REPOS:
   trunk:
     - AppAuth
     - Chrysan
+    - FBSDKCoreKit
+    - FBSDKLoginKit
+    - FBSDKShareKit
     - GoogleSignIn
     - GTMAppAuth
     - GTMSessionFetcher
@@ -39,19 +62,25 @@ SPEC REPOS:
 EXTERNAL SOURCES:
   Flutter:
     :path: Flutter
+  flutter_boost:
+    :path: ".symlinks/plugins/flutter_boost/ios"
   google_sign_in_ios:
     :path: ".symlinks/plugins/google_sign_in_ios/ios"
 
 SPEC CHECKSUMS:
   AppAuth: e93b919be5dbcbba49555011ce94f7d716368574
   Chrysan: c339c73bd7b666e66249b9f6f6028f1b05efabe2
+  FBSDKCoreKit: a72c8d2c42aa4c4d5eaa5f160be9580750f70d2e
+  FBSDKLoginKit: 89f3c2f8be892ec8a5359619a8ff657578d47604
+  FBSDKShareKit: 872cc45ab8709881ffd406ae32cc39a1085edec1
   Flutter: f04841e97a9d0b0a8025694d0796dd46242b2854
+  flutter_boost: 1b5f53a54ba73726829691db891e85f40b4f6494
   google_sign_in_ios: 8115e3fbe097e6509beb819ed602d47369d9011f
   GoogleSignIn: b232380cf495a429b8095d3178a8d5855b42e842
   GTMAppAuth: 99fb010047ba3973b7026e45393f51f27ab965ae
   GTMSessionFetcher: 8a1b34ad97ebe6f909fb8b9b77fba99943007556
   SnapKit: e01d52ebb8ddbc333eefe2132acf85c8227d9c25
 
-PODFILE CHECKSUM: 463ba121dfc5ba63eba8bbe657becd406da47dae
+PODFILE CHECKSUM: e5e7784d8cae2b44c7e369c08d9dffc3e6c48252
 
 COCOAPODS: 1.11.2

@@ -34,6 +34,10 @@ dependencies:
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
+  flutter_boost:
+    git:
+      url: 'https://github.com/alibaba/flutter_boost.git'
+      ref: 'v3.0-null-safety-preview.16'
   # 三方开源包依赖配置
   # ios样式Widget(某些定制化独特风格)：Cupertino库(三方开源包)
   cupertino_icons: ^1.0.2
