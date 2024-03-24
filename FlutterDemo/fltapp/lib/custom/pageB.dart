@@ -83,24 +83,26 @@ class _PageBState extends State<PageB> {
     return null;
   }
 
-  Future<int?> _swiftCustomMod() async {
-    String desLog = '';
-    Map<String, Map> params = {};
-    final result;
-    try {
-      result = await channel.invokeMethod('swiftCustomMod',params);
-      print('result is $result');
-      return result;
-    } on PlatformException catch (e) {
-      desLog = "Failed reason: '${e.message}'";
-      print(desLog);
-    }
+  // Future<int?> _swiftCustomMod() async {
+  //   String desLog = '';
+  //   Map<String, Map> params = {};
+  //   final result;
+  //   try {
+  //     result = await channel.invokeMethod('swiftCustomMod',params);
+  //     print('result is $result');
+  //     return result;
+  //   } on PlatformException catch (e) {
+  //     desLog = "Failed reason: '${e.message}'";
+  //     print(desLog);
+  //   }
+  //
+  //   setState(() {
+  //     desLog;
+  //   });
+  //   return null;
+  // }
 
-    setState(() {
-      desLog;
-    });
-    return null;
-  }
+
 
   @override
   //状态SW插件子类的本身执行区中重构插件编译build事件实例(系统自动触发)
@@ -156,7 +158,9 @@ class _PageBState extends State<PageB> {
                     _swiftCustomMethod();
                   }),
                   ToNativeUI(onPress: () {
-                    _swiftCustomMod();
+                    // _swiftCustomMod();
+                    //name: "原生页的解析别名"
+                    BoostNavigator.instance.push("NativeViewController",arguments:{});
                   }),
                   SizedBox(
                     height: 40,
@@ -554,7 +558,7 @@ class ChannelTest extends StatelessWidget {
               textStyle: MaterialStateProperty.all(const TextStyle(
                   backgroundColor: Colors.transparent, fontSize: 17)),
             ),
-            child: const Text('事件通道之Native层提供IMP'),
+            child: const Text('(system)事件通道之Native层提供IMP'),
           ),
         ],
       ),

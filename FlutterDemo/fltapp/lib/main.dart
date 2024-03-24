@@ -1,4 +1,5 @@
 // MaterialDesign库
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 //更基本Widget：Widgets集
@@ -14,6 +15,7 @@ import 'custom/pageB.dart';
 import 'custom/pageC.dart';
 import 'custom/pageD.dart';
 import 'custom/PageAlgorithm.dart';
+import 'custom/Unity.dart';
 
 import 'custom/splash_page.dart';
 import 'custom/other_page.dart';
@@ -114,9 +116,13 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  //获取原生所构建出的通道channel(通道名即通道原生对应的名)
+  static const messageChannel = BasicMessageChannel('plugins.flutter.io/google_sign_in_ios', StandardMessageCodec());
+
   //   设置与源生跨层交互的flutter页
   // 举例：'splash’和’otherPage’属性对应跳转路径
   // flutter页属性别名
+  // flutter页映射表
   static Map<String,FlutterBoostRouteFactory> routerMap = {
     'splash':(settings,uniqueId){
       // MaterialFlags
@@ -127,7 +133,7 @@ class _MyAppState extends State<MyApp> {
     'otherPage':(settings,uniqueId) {
       return PageRouteBuilder<dynamic>(
           settings: settings,
-          pageBuilder: (context, __, ___) => OtherPage());
+          pageBuilder: (context, __, ___) => OtherPage(title: 'Flutter OtherPage页', settings: settings,));
     },
     'myHomePage':(settings,uniqueId) {
       return PageRouteBuilder<dynamic>(
@@ -164,7 +170,6 @@ class _MyAppState extends State<MyApp> {
   //   设置flutterBoost路由工厂
   Route<dynamic>? routeFactory(RouteSettings settings,  String? uniqueId) {
     FlutterBoostRouteFactory? func = routerMap[settings.name];
-    print("settings.name: ${settings.name}");
     if (func == null) {
       return null;
     }
@@ -212,6 +217,20 @@ class _MyAppState extends State<MyApp> {
   @override
   //重构插件编译build事件实例(系统自动触发)
   Widget build(BuildContext context) {
+    //推荐(优先)
+    //说明messageChannel任何页都能接收消息
+    //Native主动发送(Boost)
+    messageChannel.setMessageHandler((message) async{
+      //处理接收到的消息
+      if (kDebugMode) {
+        print('ReceivedMessage: $message');
+      }
+      Unity().showDialogCustom(context,"接收处理NativeToFlutter",'$message',(){
+
+      },(){});
+      return "众人重任";
+    });
+
     //kDebugMode调试模式
     return FlutterBoostApp(
       // 设置路由
@@ -225,23 +244,19 @@ class _MyAppState extends State<MyApp> {
 class BoostNavigatorObserver extends NavigatorObserver {
   @override
   void didPush(Route<dynamic> route, Route<dynamic>? previousRoute) {
-    print('boost-didPush${route.settings.name}');
   }
 
   @override
   void didPop(Route<dynamic> route, Route<dynamic>? previousRoute) {
-    print('boost-didPop${route.settings.name}');
   }
 
   @override
   void didRemove(Route<dynamic> route, Route<dynamic>? previousRoute) {
 
-    print('boost-didRemove${route.settings.name}');
   }
 
   @override
   void didStartUserGesture(Route<dynamic> route, Route<dynamic>? previousRoute) {
-    print('boost-didStartUserGesture${route.settings.name}');
   }
 }
 

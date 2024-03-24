@@ -9,10 +9,12 @@ import UIKit
 import SnapKit
 import Chrysan
 import flutter_boost
+import CoreMedia
 
 class NativeViewControllerOne: UIViewController {
 
     var flutterContainer: FBFlutterViewContainer = FBFlutterViewContainer()
+    var removeListener: FBVoidCallback = {()in}
 
     private lazy var praiseTipL: UILabel = {
         let l = UILabel()
@@ -37,11 +39,40 @@ class NativeViewControllerOne: UIViewController {
     }()
 
     @objc func thumbsUpBtnClicked(psender: UIButton) {
-        flutterContainer.setName("otherPage", uniqueId: nil, params: [:], opaque: true)
-        flutterContainer.view.frame = CGRect(x: 50, y: 300, width: 280, height: 350)
+        flutterContainer.setName("otherPage", uniqueId: nil, params: ["name":"yanhaijun","gender":"男","hobby":"swimming"], opaque: true)
         flutterContainer.view.backgroundColor = UIColor.systemYellow
-        view.addSubview(flutterContainer.view)
-        self.addChild(flutterContainer)
+        //普通跳转场景
+        self.navigationController?.pushViewController(flutterContainer, animated: true)
+
+        //embed情景
+//        flutterContainer.view.frame = CGRect(x: 0, y: 0, width: SCREEN_WIDTH, height: SCREEN_HEIGHT)
+//        view.addSubview(flutterContainer.view)
+//        self.addChild(flutterContainer)
+
+//        数据：NativeToFlutter
+        FlutterBoost.instance().sendEventToFlutter(with: "otherPage", arguments: ["key": "otherPage","arguments":["content":["happy":"我很开心"]]])
+
+//        数据：FlutterToNative
+        FlutterBoost.instance().addEventListener({ key, arguments in
+            if let response = arguments as NSDictionary? {
+                let happy: String = (response["content"] as! NSDictionary)["happy"] as? String ?? ""
+                self.swiftCustomMothod(des: happy)
+
+            }else {
+                //flutter混编时打印命令失效
+                self.chrysan.showHUD(Status(id:.plain, message: "Failed to receive a valid response", progress: nil, progressText: nil), hideAfterDelay: 4.0)
+            }
+        }, forName: "NativeViewControllerOne")
+
+        //Native主动发送(Boost)
+        //双向数据+双向imp操作(推荐优先)
+        let messageChannel: FlutterBasicMessageChannel = FlutterBasicMessageChannel(name: "plugins.flutter.io/google_sign_in_ios", binaryMessenger: flutterContainer.binaryMessenger)
+        //数据：NativeToFlutter
+        messageChannel.sendMessage(["content":"佩云宝宝很好呀"]) { result in
+            //逆向数据FlutterToNative
+            print("逆向结果result:\(String(describing: result))")
+            self.swiftCustomMothod(des: String(describing: result))
+        }
     }
 
     private lazy var backBtn: UIButton = {
@@ -75,10 +106,10 @@ class NativeViewControllerOne: UIViewController {
     }
 
 //  embed情景下必须实现！！！
-    override func didMove(toParent parent: UIViewController?) {
-        flutterContainer.didMove(toParent: parent)
-        super.didMove(toParent: parent)
-    }
+//    override func didMove(toParent parent: UIViewController?) {
+//        flutterContainer.didMove(toParent: parent)
+//        super.didMove(toParent: parent)
+//    }
 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
@@ -124,5 +155,9 @@ class NativeViewControllerOne: UIViewController {
         return UIWindow(frame: .zero)
     }
 
-
+    //平台Swift 原生构建IMP
+    func swiftCustomMothod(des:String){
+        print("des:\(des)")
+        self.chrysan.showHUD(Status(id:.success, message:des , progress: nil, progressText: nil), hideAfterDelay: 4.0)
+    }
 }

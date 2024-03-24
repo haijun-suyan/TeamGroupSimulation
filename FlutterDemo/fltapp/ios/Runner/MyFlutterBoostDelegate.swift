@@ -18,15 +18,20 @@ class MyFlutterBoostDelegate:NSObject, FlutterBoostDelegate {
 //    FlutterBoostDelegate协议代理
     func pushNativeRoute(_ pageName: String!, arguments: [AnyHashable : Any]!) {
         print("pageName:\(pageName)")
+        print("arguments:\(arguments)")
         print("pushNativeRoute")
         let animated = isBool(arguments["animated"] as Any)
         let present = isBool(arguments["present"] as Any)
 
         var nvc: UIViewController = UIViewController()
 
-        if pageName == "NativeViewControllerTwo" {
+        if pageName == "NativeViewControllerThree" {
+            nvc = NativeViewControllerThree()
+        }else if pageName == "NativeViewControllerTwo" {
             nvc = NativeViewControllerTwo()
-        } else {
+        } else if pageName == "NativeViewControllerOne" {
+            nvc = NativeViewControllerOne()
+        }else {
             nvc = NativeViewController()
         }
 
@@ -63,7 +68,7 @@ class MyFlutterBoostDelegate:NSObject, FlutterBoostDelegate {
         let vc: FBFlutterViewContainer = self.navigationController?.presentedViewController as? FBFlutterViewContainer ?? FBFlutterViewContainer()
         //是否伴随动画,默认是true
         var animated = true
-        let animatedValue:NSNumber = options.arguments["animated"] as! NSNumber
+        let animatedValue:NSNumber = options.arguments["animated"] as? NSNumber ?? 1
         if animatedValue as! Bool {
             animated = isBool(animatedValue)
         }

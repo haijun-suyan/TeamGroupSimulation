@@ -34,8 +34,8 @@ class NativeViewController: UIViewController {
     private lazy var thumbsUpBtn: UIButton = {
         let btn = UIButton()
         btn.backgroundColor = colorWithHex(0xffffff)
-        btn.setTitle("事件通道之flutter层提供IMP", for: .normal)
-        btn.setTitle("事件通道之flutter层提供IMP", for: .highlighted)
+//        btn.setTitle("事件通道之flutter层提供IMP", for: .normal)
+//        btn.setTitle("事件通道之flutter层提供IMP", for: .highlighted)
         btn.setTitleColor(colorWithHex(0x333333), for: .normal)
         btn.setTitleColor(colorWithHex(0x333333), for: .highlighted)
         btn.titleLabel?.font = MSOPFont(at: 16)
@@ -44,31 +44,31 @@ class NativeViewController: UIViewController {
     }()
 
     @objc func thumbsUpBtnClicked(psender: UIButton) {
-        let controller: FlutterViewController = (keyWindowInstance().rootViewController as? FlutterViewController)!;
-        let channel: FlutterMethodChannel = FlutterMethodChannel.init(name: "plugins.flutter.io/google_sign_in_ios", binaryMessenger:controller.binaryMessenger);
-
-        // -------------flutter提供IMP(数据的双向通信)-----------------
-        //arguments Native>Flutter 数据正向
-        //result Flutter>Native 数据逆向
-        do {
-            channel.invokeMethod("flutterCustomMethod", arguments: "您好"){result in
-                //result:由Flutter逆向反馈的数据
-                if let response = result as? String {
-                    print("Received response from Flutter: \(response)")
-                    self.chrysan.showHUD(Status(id:.plain, message: "ReceivedDataFromFlutter:\(response)", progress: nil, progressText: nil), hideAfterDelay: 4.0)
-
-                }else if let response = result as? Int {
-                    self.chrysan.showHUD(Status(id:.success, message: "ReceivedDataFromFlutter:\(response)", progress: nil, progressText: nil), hideAfterDelay: 4.0)
-                    self.resultTipL.text = "结果:\(response)"
-                }else {
-                    //flutter混编时打印命令失效
-                    print("哈哈哈哈哈哈哈哈")
-                    self.chrysan.showHUD(Status(id:.plain, message: "Failed to receive a valid response", progress: nil, progressText: nil), hideAfterDelay: 4.0)
-                }
-            }
-        } catch let error {
-            print("Error invoking method:\(error)")
-        }
+//        let controller: FlutterViewController = (keyWindowInstance().rootViewController as? FlutterViewController)!;
+//        let channel: FlutterMethodChannel = FlutterMethodChannel.init(name: "plugins.flutter.io/google_sign_in_ios", binaryMessenger:controller.binaryMessenger);
+//
+//        // -------------flutter提供IMP(数据的双向通信)-----------------
+//        //arguments Native>Flutter 数据正向
+//        //result Flutter>Native 数据逆向
+//        do {
+//            channel.invokeMethod("flutterCustomMethod", arguments: "您好"){result in
+//                //result:由Flutter逆向反馈的数据
+//                if let response = result as? String {
+//                    print("Received response from Flutter: \(response)")
+//                    self.chrysan.showHUD(Status(id:.plain, message: "ReceivedDataFromFlutter:\(response)", progress: nil, progressText: nil), hideAfterDelay: 4.0)
+//
+//                }else if let response = result as? Int {
+//                    self.chrysan.showHUD(Status(id:.success, message: "ReceivedDataFromFlutter:\(response)", progress: nil, progressText: nil), hideAfterDelay: 4.0)
+//                    self.resultTipL.text = "结果:\(response)"
+//                }else {
+//                    //flutter混编时打印命令失效
+//                    print("哈哈哈哈哈哈哈哈")
+//                    self.chrysan.showHUD(Status(id:.plain, message: "Failed to receive a valid response", progress: nil, progressText: nil), hideAfterDelay: 4.0)
+//                }
+//            }
+//        } catch let error {
+//            print("Error invoking method:\(error)")
+//        }
 
     }
 
@@ -85,8 +85,9 @@ class NativeViewController: UIViewController {
     }()
 
     @objc func backBtnClicked(psender: UIButton) {
-        dismiss(animated: true) {
-        }
+//        dismiss(animated: true) {
+//        }
+        self.navigationController?.popViewController(animated: false)
     }
 
     override func viewDidLoad() {

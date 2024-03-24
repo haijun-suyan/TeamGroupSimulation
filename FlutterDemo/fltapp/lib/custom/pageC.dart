@@ -1,6 +1,8 @@
 //flutter项目 dart文件参考模版
 // MaterialDesign库
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 //更基本Widget：Widgets集
 
 //ios样式Widget(某些定制化独特风格)：Cupertino库
@@ -8,6 +10,8 @@ import 'package:flutter/material.dart';
 
 //自定义辅助文件
 import 'package:flutter_boost/flutter_boost.dart';
+
+import 'Unity.dart';
 
 //内容数据资源
 class PageC extends StatefulWidget {
@@ -23,6 +27,8 @@ class PageC extends StatefulWidget {
 //类 级 构造器
 //(自定义)状态子有态SW插件类 实例(体)
 class _PageCState extends State<PageC> {
+  //获取原生所构建出的通道channel(通道名即通道原生对应的名)
+  static const messageChannel = BasicMessageChannel('plugins.flutter.io/google_sign_in_ios', StandardMessageCodec());
   @override
   //状态SW插件子类的本身执行区中重构插件编译build事件实例(系统自动触发)
   Widget build(BuildContext context) {
@@ -46,6 +52,15 @@ class _PageCState extends State<PageC> {
                   '欢迎来到C界面(flutter页)',
                   style: TextStyle(fontSize: 17),
                   textAlign: TextAlign.left,
+                ),
+                ElevatedButton(
+                  onPressed: _sendData,
+                  style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all(Colors.red),
+                      foregroundColor: MaterialStateProperty.all(Colors.white),
+                      elevation: MaterialStateProperty.all(50) //阴影
+                  ),
+                  child: const Text('消息按钮(flutter主动send)'),
                 ),
                 ElevatedButton(
                   onPressed: _nextPage,
@@ -72,4 +87,26 @@ class _PageCState extends State<PageC> {
     // setState(() {
     // });
   }
+
+  void _sendData() {
+    //不推荐：()=>{仅支持1条命令}
+    //推荐：(){支持N条命令}
+    //name: "原生页的解析别名"
+    BoostNavigator.instance.push("NativeViewControllerThree",arguments:{"name": "zpy", "gender": "女", "age":"25"});
+    //Instance of 'Future<Object?>
+    //Future未来概念
+    //Flutter主动发送(Boost)
+    Future<Object?> reply = messageChannel.send("Hello from Flutter!").then((result) {
+      //逆向数据NativeToFlutter
+      //flutterIMP
+      if (kDebugMode) {
+        print('ReceivedReply: $result');
+      }
+      Unity().showDialogCustom(context,"逆向数据NativeToFlutter",'$result',(){
+    },(){});
+
+    });
+
+  }
+
 }

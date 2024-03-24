@@ -18,11 +18,11 @@ import Chrysan
         }
 
         let vc: NativeViewControllerOne = NativeViewControllerOne()
-        vc.tabBarItem = UITabBarItem(title: "NativeOne", image: nil, tag: 0)
+        vc.tabBarItem = UITabBarItem(title: "原生One", image: nil, tag: 0)
 
         let fvc: FBFlutterViewContainer = FBFlutterViewContainer()
         fvc.setName("myHomePage", uniqueId: nil, params: [:], opaque: true)
-        fvc.tabBarItem = UITabBarItem(title: "flutter_tab", image: nil, tag: 1)
+        fvc.tabBarItem = UITabBarItem(title: "flutter相关", image: nil, tag: 1)
         let tabVC: UITabBarController = UITabBarController()
         tabVC.viewControllers = [vc,fvc]
         let rvc: UINavigationController = UINavigationController(rootViewController: tabVC)
@@ -48,6 +48,20 @@ import Chrysan
 //        return true
 
         //MessageChannel 采用Boost消息通道(数据双向传递)
+        //Flutter主动发送(Boost)
+        //双向数据+双向imp操作(推荐优先)
+        let messageChannel: FlutterBasicMessageChannel = FlutterBasicMessageChannel(name: "plugins.flutter.io/google_sign_in_ios", binaryMessenger: fvc.binaryMessenger)
+        //数据：FlutterToNative
+        messageChannel.setMessageHandler { message, callback in
+            //处理接收到的消息
+            //nativeIMP
+            print("Received:\(String(describing: message))")
+            self.keyWindowInstance().chrysan.showHUD(Status(id:.plain, message: "FlutterToNative:\(String(describing: message))", progress: nil, progressText: nil), hideAfterDelay: 4.0)
+            self.swiftCustomMothd()
+            //逆向数据NativeToFlutter
+            callback("Reply from iOS！")
+        }
+
 
 
         //系统的MethodChannel机制(数据双向传递)
@@ -101,6 +115,25 @@ import Chrysan
         vc.hidesBottomBarWhenPushed = true//官方自带
         controller.present(vc, animated: false) {}
     }
+
+    //平台Swift 原生构建IMP
+    func swiftCustomMothd(){
+
+    }
+
+    func keyWindowInstance() -> UIWindow {
+        if let keyWindow = UIApplication.shared.keyWindow {
+            return keyWindow
+        }
+        if let window = UIApplication.shared.delegate?.window {
+            if let win = window {
+                return win
+            }
+        }
+        return UIWindow(frame: .zero)
+    }
+
+
 
 
 

@@ -16,6 +16,8 @@
 		97C146FE1CF9000F007C117D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FD1CF9000F007C117D /* Assets.xcassets */; };
 		97C147011CF9000F007C117D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FF1CF9000F007C117D /* LaunchScreen.storyboard */; };
 		A23758712C71BECF2A61DEB5 /* Pods_Runner.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88D688714D67E95DDE9A8A15 /* Pods_Runner.framework */; };
+		F3520FE92BAC821800F5EEC9 /* MyFlutterRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3520FE82BAC821800F5EEC9 /* MyFlutterRouter.swift */; };
+		F3520FEB2BAEDE3500F5EEC9 /* NativeViewControllerThree.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3520FEA2BAEDE3500F5EEC9 /* NativeViewControllerThree.swift */; };
 		F3BB20C92B1F42720011951A /* NativeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3BB20C82B1F42720011951A /* NativeViewController.swift */; };
 		F3BB20CB2B1F43E70011951A /* SwiftDefine.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3BB20CA2B1F43E70011951A /* SwiftDefine.swift */; };
 		F3BB20CD2B1F47120011951A /* CommonUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3BB20CC2B1F47120011951A /* CommonUtil.swift */; };
@@ -71,6 +73,8 @@
 		AF88A24CCCC8CDA68F4AA82C /* Pods_RunnerTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RunnerTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D9EA5E9C7A49EF7D876F2BB7 /* Pods-Runner.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner.debug.xcconfig"; path = "Target Support Files/Pods-Runner/Pods-Runner.debug.xcconfig"; sourceTree = "<group>"; };
 		E2C9AA0493C549D2240BF46F /* Pods-Runner.profile.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner.profile.xcconfig"; path = "Target Support Files/Pods-Runner/Pods-Runner.profile.xcconfig"; sourceTree = "<group>"; };
+		F3520FE82BAC821800F5EEC9 /* MyFlutterRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyFlutterRouter.swift; sourceTree = "<group>"; };
+		F3520FEA2BAEDE3500F5EEC9 /* NativeViewControllerThree.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NativeViewControllerThree.swift; sourceTree = "<group>"; };
 		F3BB20C82B1F42720011951A /* NativeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NativeViewController.swift; sourceTree = "<group>"; };
 		F3BB20CA2B1F43E70011951A /* SwiftDefine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftDefine.swift; sourceTree = "<group>"; };
 		F3BB20CC2B1F47120011951A /* CommonUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommonUtil.swift; sourceTree = "<group>"; };
@@ -159,11 +163,13 @@
 				1498D2331E8E89220040F4C2 /* GeneratedPluginRegistrant.m */,
 				74858FAE1ED2DC5600515810 /* AppDelegate.swift */,
 				F3C925BA2B9F05D400FDD230 /* MyFlutterBoostDelegate.swift */,
+				F3520FE82BAC821800F5EEC9 /* MyFlutterRouter.swift */,
 				F3BB20CA2B1F43E70011951A /* SwiftDefine.swift */,
 				F3BB20CC2B1F47120011951A /* CommonUtil.swift */,
 				F3BB20C82B1F42720011951A /* NativeViewController.swift */,
 				F3C925BC2B9F12FF00FDD230 /* NativeViewControllerOne.swift */,
 				F3C925BE2B9F6E9F00FDD230 /* NativeViewControllerTwo.swift */,
+				F3520FEA2BAEDE3500F5EEC9 /* NativeViewControllerThree.swift */,
 				74858FAD1ED2DC5600515810 /* Runner-Bridging-Header.h */,
 			);
 			path = Runner;
@@ -397,9 +403,11 @@
 				F3BB20CB2B1F43E70011951A /* SwiftDefine.swift in Sources */,
 				F3BB20C92B1F42720011951A /* NativeViewController.swift in Sources */,
 				74858FAF1ED2DC5600515810 /* AppDelegate.swift in Sources */,
+				F3520FE92BAC821800F5EEC9 /* MyFlutterRouter.swift in Sources */,
 				F3C925BB2B9F05D400FDD230 /* MyFlutterBoostDelegate.swift in Sources */,
 				F3C925BD2B9F12FF00FDD230 /* NativeViewControllerOne.swift in Sources */,
 				F3BB20CD2B1F47120011951A /* CommonUtil.swift in Sources */,
+				F3520FEB2BAEDE3500F5EEC9 /* NativeViewControllerThree.swift in Sources */,
 				1498D2341E8E89220040F4C2 /* GeneratedPluginRegistrant.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
