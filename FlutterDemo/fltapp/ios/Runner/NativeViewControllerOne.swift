@@ -13,8 +13,7 @@ import CoreMedia
 
 class NativeViewControllerOne: UIViewController {
 
-    public var flutterContainer: FBFlutterViewContainer = FBFlutterViewContainer()
-
+    var fCon: FBFlutterViewContainer = FBFlutterViewContainer()
     var removeListener: FBVoidCallback = {()in}
 
     private lazy var praiseTipL: UILabel = {
@@ -40,6 +39,8 @@ class NativeViewControllerOne: UIViewController {
     }()
 
     @objc func changeBtnClicked(psender: UIButton) {
+        var flutterContainer: FBFlutterViewContainer = FBFlutterViewContainer()
+        fCon = flutterContainer
         flutterContainer.setName("otherPage", uniqueId: nil, params: ["name":"yanhaijun","gender":"男","hobby":"swimming"], opaque: true)
 //        flutterContainer.view.backgroundColor = UIColor.systemYellow
         //embed情景
@@ -63,8 +64,8 @@ class NativeViewControllerOne: UIViewController {
                 self.swiftCustomMothod(des: happy)
 
                 //embed情景移除
-                self.flutterContainer.view.removeFromSuperview()
-                self.flutterContainer.removeFromParent()
+                flutterContainer.view.removeFromSuperview()
+                flutterContainer.removeFromParent()
 //                self.flutterContainer.didMove(toParent: nil)
             }else {
                 //flutter混编时打印命令失效
@@ -77,8 +78,8 @@ class NativeViewControllerOne: UIViewController {
     private lazy var change1Btn: UIButton = {
         let btn = UIButton()
         btn.backgroundColor = colorWithHex(0xffffff)
-        btn.setTitle("1[Flutter]otherPage", for: .normal)
-        btn.setTitle("1[Flutter]otherPage", for: .highlighted)
+        btn.setTitle("1[Flutter]splashPage", for: .normal)
+        btn.setTitle("1[Flutter]splashPage", for: .highlighted)
         btn.setTitleColor(colorWithHex(0x333333), for: .normal)
         btn.setTitleColor(colorWithHex(0x333333), for: .highlighted)
         btn.titleLabel?.font = MSOPFont(at: 16)
@@ -87,6 +88,7 @@ class NativeViewControllerOne: UIViewController {
     }()
 
     @objc func change1BtnClicked(psender: UIButton) {
+        let flutterContainer: FBFlutterViewContainer = FBFlutterViewContainer()
         flutterContainer.setName("splash", uniqueId: nil, params: ["name":"yanhaijun","gender":"男","hobby":"swimming"], opaque: true)
         flutterContainer.view.backgroundColor = UIColor.systemYellow
         //普通跳转场景
@@ -109,6 +111,7 @@ class NativeViewControllerOne: UIViewController {
     }()
 
     @objc func change2BtnClicked(psender: UIButton) {
+        var flutterContainer: FBFlutterViewContainer = FBFlutterViewContainer()
         flutterContainer.setName("otherPage", uniqueId: nil, params: ["name":"yanhaijun","gender":"男","hobby":"swimming"], opaque: true)
         flutterContainer.view.backgroundColor = UIColor.systemYellow
         //普通跳转场景
@@ -140,6 +143,7 @@ class NativeViewControllerOne: UIViewController {
     }()
 
     @objc func change3BtnClicked(psender: UIButton) {
+        var flutterContainer: FBFlutterViewContainer = FBFlutterViewContainer()
         flutterContainer.setName("otherPage", uniqueId: nil, params: ["name":"yanhaijun","gender":"男","hobby":"swimming"], opaque: true)
         flutterContainer.view.backgroundColor = UIColor.systemYellow
         //普通跳转场景
@@ -175,6 +179,7 @@ class NativeViewControllerOne: UIViewController {
     }()
 
     @objc func change4BtnClicked(psender: UIButton) {
+        var flutterContainer: FBFlutterViewContainer = FBFlutterViewContainer()
         flutterContainer.setName("otherPage", uniqueId: nil, params: ["name":"yanhaijun","gender":"男","hobby":"swimming"], opaque: true)
         flutterContainer.view.backgroundColor = UIColor.systemYellow
         //普通跳转场景
@@ -208,6 +213,7 @@ class NativeViewControllerOne: UIViewController {
     }()
 
     @objc func change5BtnClicked(psender: UIButton) {
+        var flutterContainer: FBFlutterViewContainer = FBFlutterViewContainer()
         flutterContainer.setName("otherPage", uniqueId: nil, params: ["name":"yanhaijun","gender":"男","hobby":"swimming"], opaque: true)
         flutterContainer.view.backgroundColor = UIColor.systemYellow
         //普通跳转场景
@@ -242,6 +248,7 @@ class NativeViewControllerOne: UIViewController {
     }()
 
     @objc func change6BtnClicked(psender: UIButton) {
+        var flutterContainer: FBFlutterViewContainer = FBFlutterViewContainer()
         flutterContainer.setName("otherPage", uniqueId: nil, params: ["name":"yanhaijun","gender":"男","hobby":"swimming"], opaque: true)
         flutterContainer.view.backgroundColor = UIColor.systemYellow
         //普通跳转场景
@@ -272,6 +279,7 @@ class NativeViewControllerOne: UIViewController {
     }()
 
     @objc func change7BtnClicked(psender: UIButton) {
+        var flutterContainer: FBFlutterViewContainer = FBFlutterViewContainer()
         flutterContainer.setName("otherPage", uniqueId: nil, params: ["name":"yanhaijun","gender":"男","hobby":"swimming"], opaque: true)
         flutterContainer.view.backgroundColor = UIColor.systemYellow
         //普通跳转场景
@@ -321,7 +329,7 @@ class NativeViewControllerOne: UIViewController {
 
     //embed情景下必须实现！！！
     override func didMove(toParent parent: UIViewController?) {
-        flutterContainer.didMove(toParent: parent)
+        fCon.didMove(toParent: parent)
         super.didMove(toParent: parent)
     }
 

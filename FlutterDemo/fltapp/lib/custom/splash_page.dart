@@ -20,6 +20,11 @@ class _SplashPageState extends State<SplashPage> {
     Unity().showDialogCustom(context, "NativeToFlutter(Event)",
         '$arguments["content"]["happy"]', () {}, () {});
 
+    // showDialog(
+    //   context: context,
+    //   builder: (context) => const CustomDialog(),
+    // );
+
     return 100;
   }
 

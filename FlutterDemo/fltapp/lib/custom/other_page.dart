@@ -20,13 +20,17 @@ class OtherPage extends StatefulWidget {
 class _OtherPageState extends State<OtherPage> {
   // -----(原生页面实现操作)flutter提供IMP功能(数据的双向通信)-----
   late VoidCallback removeListener;
+  bool isNTFDialog = false;
   Future<dynamic> flutterCustomMethod(Map<dynamic, dynamic> arguments) async {
+    //接收处理
     if (kDebugMode) {
       print('===arguments:$arguments');
     }
-    //原生载体采用embed情景addChild实现对flutter的内嵌即此时主载体依旧为原生载体则flutter的Dialog弹窗失效
-    Unity().showDialogCustom(context, "NativeToFlutter(Event)",
-        '$arguments["content"]["happy"]', () {}, () {});
+
+    //(setState状态写入事件)引用码更改状态环境：执行引用setState的坑回调事件内的回调指令码后重运行同类结构中的编译bulid事件的渲染命令界面渲染的更新
+    setState(() {
+      isNTFDialog = true;
+    });
 
     return 100;
   }
@@ -34,7 +38,38 @@ class _OtherPageState extends State<OtherPage> {
   @override
   void initState() {
     super.initState();
-    Logger.log('boost-OtherPage $mounted');
+    Logger.log('===boost-OtherPage $mounted');
+
+    if (kDebugMode) {
+      Logger.log('===============$isNTFDialog');
+    }
+
+    if (isNTFDialog) {
+
+      WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
+        Unity().showDialogCustom(context, "NativeToFlutter(Event)",
+            '["content"]["happy"]', () {}, () {});
+      });
+      isNTFDialog = false;
+    }
+  }
+
+  void sssss() {
+    super.initState();
+    Logger.log('===boost-OtherPage $mounted');
+
+    if (kDebugMode) {
+      Logger.log('===============$isNTFDialog');
+    }
+
+    if (isNTFDialog) {
+
+      WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
+        Unity().showDialogCustom(context, "NativeToFlutter(Event)",
+            '["content"]["happy"]', () {}, () {});
+      });
+      isNTFDialog = false;
+    }
   }
 
   @override
@@ -52,6 +87,7 @@ class _OtherPageState extends State<OtherPage> {
     removeListener =
         BoostChannel.instance.addEventListener("otherPage", (key, arguments) {
           //接收处理
+          isNTFDialog = true;
       return flutterCustomMethod(arguments);
     });
 

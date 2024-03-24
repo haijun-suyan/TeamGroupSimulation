@@ -71,6 +71,45 @@ class Unity {
   }
 }
 
+class CustomDialog extends StatelessWidget {
+  const CustomDialog({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Dialog(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(12.0),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            const Text('这是自定义对话框的标题'),
+            const SizedBox(height: 10.0),
+            const Text('这是自定义对话框的内容'),
+            const SizedBox(height: 20.0),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: <Widget>[
+                ElevatedButton(
+                  child: const Text('关闭'),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+
+
+
 class ColorsCustom {
   //静态字段darkYellow
   static const Color darkYellow = Color(0xB0E0E600);
