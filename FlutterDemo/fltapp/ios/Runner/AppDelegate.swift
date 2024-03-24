@@ -18,11 +18,12 @@ import Chrysan
         }
 
         let vc: NativeViewControllerOne = NativeViewControllerOne()
-        vc.tabBarItem = UITabBarItem(title: "原生One", image: nil, tag: 0)
+        vc.tabBarItem = UITabBarItem(title: "原生One", image: UIImage(named: "native_icon_unselect"), selectedImage: UIImage(named: "native_icon_select"))
 
         let fvc: FBFlutterViewContainer = FBFlutterViewContainer()
         fvc.setName("myHomePage", uniqueId: nil, params: [:], opaque: true)
-        fvc.tabBarItem = UITabBarItem(title: "flutter相关", image: nil, tag: 1)
+//        fvc.tabBarItem = UITabBarItem(title: , image: nil, tag: 1)
+        fvc.tabBarItem = UITabBarItem(title: "flutter相关", image: UIImage(named: "flutter_icon_unselect"), selectedImage: UIImage(named: "flutter_icon_select"))
         let tabVC: UITabBarController = UITabBarController()
         tabVC.viewControllers = [vc,fvc]
         let rvc: UINavigationController = UINavigationController(rootViewController: tabVC)
@@ -59,7 +60,7 @@ import Chrysan
             self.keyWindowInstance().chrysan.showHUD(Status(id:.plain, message: "FlutterToNative:\(String(describing: message))", progress: nil, progressText: nil), hideAfterDelay: 4.0)
             self.swiftCustomMothd()
             //逆向数据NativeToFlutter
-            callback("Reply from iOS！")
+            callback("逆向反馈 from iOS！")
         }
 
 

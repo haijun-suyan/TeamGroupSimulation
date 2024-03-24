@@ -60,6 +60,15 @@ let SAFEAREA_TOPHEIGHT: CGFloat  = SCREEN_HEIGHT == 812.0 ? 88 : 64
 //安全区域底部 耳朵 高度变化(适配iPhoneX)
 let SAFEAREA_BOTTOMHEIGHT: CGFloat = SCREEN_HEIGHT == 812.0 ? 34 : 0
 
+//底部栏高度 耳朵
+let bottomBarHeight = UIApplication.shared.windows.first?.safeAreaInsets.bottom ?? 0
+
+//tabBar高度
+let tabBarHeight: CGFloat = 49.0
+
+
+
+
 let HttpError = "网络请求失败"
 
 let MarginLeft: CGFloat = 15.0
