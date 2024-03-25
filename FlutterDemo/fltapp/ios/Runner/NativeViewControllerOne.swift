@@ -111,16 +111,14 @@ class NativeViewControllerOne: UIViewController {
     }()
 
     @objc func change2BtnClicked(psender: UIButton) {
-        var flutterContainer: FBFlutterViewContainer = FBFlutterViewContainer()
+        let flutterContainer: FBFlutterViewContainer = FBFlutterViewContainer()
         flutterContainer.setName("otherPage", uniqueId: nil, params: ["name":"yanhaijun","gender":"男","hobby":"swimming"], opaque: true)
         flutterContainer.view.backgroundColor = UIColor.systemYellow
         //普通跳转场景
         self.navigationController?.pushViewController(flutterContainer, animated: true)
 
-
-
         //Native主动发送(Boost)
-        //双向数据+双向imp操作(推荐优先)
+        //双向数据+双向imp操作(推荐优先)(不受页面影响(更自由))
         let messageChannel: FlutterBasicMessageChannel = FlutterBasicMessageChannel(name: "plugins.flutter.io/google_sign_in_ios", binaryMessenger: flutterContainer.binaryMessenger)
         //数据：NativeToFlutter
         messageChannel.sendMessage(["content":"佩云宝宝很好呀"]) { result in
@@ -133,8 +131,8 @@ class NativeViewControllerOne: UIViewController {
     private lazy var change3Btn: UIButton = {
         let btn = UIButton()
         btn.backgroundColor = colorWithHex(0xffffff)
-        btn.setTitle("3[Flutter]otherPage", for: .normal)
-        btn.setTitle("3[Flutter]otherPage", for: .highlighted)
+        btn.setTitle("3[Flutter]pageC", for: .normal)
+        btn.setTitle("3[Flutter]pageC", for: .highlighted)
         btn.setTitleColor(colorWithHex(0x333333), for: .normal)
         btn.setTitleColor(colorWithHex(0x333333), for: .highlighted)
         btn.titleLabel?.font = MSOPFont(at: 16)
@@ -143,27 +141,11 @@ class NativeViewControllerOne: UIViewController {
     }()
 
     @objc func change3BtnClicked(psender: UIButton) {
-        var flutterContainer: FBFlutterViewContainer = FBFlutterViewContainer()
-        flutterContainer.setName("otherPage", uniqueId: nil, params: ["name":"yanhaijun","gender":"男","hobby":"swimming"], opaque: true)
+        let flutterContainer: FBFlutterViewContainer = FBFlutterViewContainer()
+        flutterContainer.setName("pageC", uniqueId: nil, params: ["name":"yanhaijun","gender":"男","hobby":"swimming"], opaque: true)
         flutterContainer.view.backgroundColor = UIColor.systemYellow
         //普通跳转场景
         self.navigationController?.pushViewController(flutterContainer, animated: true)
-
-
-
-
-
-
-
-        //Native主动发送(Boost)
-        //双向数据+双向imp操作(推荐优先)
-        let messageChannel: FlutterBasicMessageChannel = FlutterBasicMessageChannel(name: "plugins.flutter.io/google_sign_in_ios", binaryMessenger: flutterContainer.binaryMessenger)
-        //数据：NativeToFlutter
-        messageChannel.sendMessage(["content":"佩云宝宝很好呀"]) { result in
-            //逆向数据FlutterToNative
-            print("逆向结果result:\(String(describing: result))")
-            self.swiftCustomMothod(des: String(describing: result))
-        }
     }
 
     private lazy var change4Btn: UIButton = {
@@ -188,16 +170,6 @@ class NativeViewControllerOne: UIViewController {
 
 
 
-
-        //Native主动发送(Boost)
-        //双向数据+双向imp操作(推荐优先)
-        let messageChannel: FlutterBasicMessageChannel = FlutterBasicMessageChannel(name: "plugins.flutter.io/google_sign_in_ios", binaryMessenger: flutterContainer.binaryMessenger)
-        //数据：NativeToFlutter
-        messageChannel.sendMessage(["content":"佩云宝宝很好呀"]) { result in
-            //逆向数据FlutterToNative
-            print("逆向结果result:\(String(describing: result))")
-            self.swiftCustomMothod(des: String(describing: result))
-        }
     }
 
     private lazy var change5Btn: UIButton = {
@@ -222,17 +194,6 @@ class NativeViewControllerOne: UIViewController {
 
 
 
-
-
-        //Native主动发送(Boost)
-        //双向数据+双向imp操作(推荐优先)
-        let messageChannel: FlutterBasicMessageChannel = FlutterBasicMessageChannel(name: "plugins.flutter.io/google_sign_in_ios", binaryMessenger: flutterContainer.binaryMessenger)
-        //数据：NativeToFlutter
-        messageChannel.sendMessage(["content":"佩云宝宝很好呀"]) { result in
-            //逆向数据FlutterToNative
-            print("逆向结果result:\(String(describing: result))")
-            self.swiftCustomMothod(des: String(describing: result))
-        }
     }
 
     private lazy var change6Btn: UIButton = {
@@ -255,22 +216,14 @@ class NativeViewControllerOne: UIViewController {
         self.navigationController?.pushViewController(flutterContainer, animated: true)
 
 
-        //Native主动发送(Boost)
-        //双向数据+双向imp操作(推荐优先)
-        let messageChannel: FlutterBasicMessageChannel = FlutterBasicMessageChannel(name: "plugins.flutter.io/google_sign_in_ios", binaryMessenger: flutterContainer.binaryMessenger)
-        //数据：NativeToFlutter
-        messageChannel.sendMessage(["content":"佩云宝宝很好呀"]) { result in
-            //逆向数据FlutterToNative
-            print("逆向结果result:\(String(describing: result))")
-            self.swiftCustomMothod(des: String(describing: result))
-        }
+
     }
 
     private lazy var change7Btn: UIButton = {
         let btn = UIButton()
         btn.backgroundColor = colorWithHex(0xffffff)
-        btn.setTitle("7[Flutter]otherPage", for: .normal)
-        btn.setTitle("7[Flutter]otherPage", for: .highlighted)
+        btn.setTitle("7ToNativeTwo", for: .normal)
+        btn.setTitle("7ToNativeTwo", for: .highlighted)
         btn.setTitleColor(colorWithHex(0x333333), for: .normal)
         btn.setTitleColor(colorWithHex(0x333333), for: .highlighted)
         btn.titleLabel?.font = MSOPFont(at: 16)
@@ -279,21 +232,11 @@ class NativeViewControllerOne: UIViewController {
     }()
 
     @objc func change7BtnClicked(psender: UIButton) {
-        var flutterContainer: FBFlutterViewContainer = FBFlutterViewContainer()
-        flutterContainer.setName("otherPage", uniqueId: nil, params: ["name":"yanhaijun","gender":"男","hobby":"swimming"], opaque: true)
-        flutterContainer.view.backgroundColor = UIColor.systemYellow
+        let vcTwo = NativeViewControllerTwo()
         //普通跳转场景
-        self.navigationController?.pushViewController(flutterContainer, animated: true)
+        self.navigationController?.pushViewController(vcTwo, animated: true)
 
-        //Native主动发送(Boost)
-        //双向数据+双向imp操作(推荐优先)
-        let messageChannel: FlutterBasicMessageChannel = FlutterBasicMessageChannel(name: "plugins.flutter.io/google_sign_in_ios", binaryMessenger: flutterContainer.binaryMessenger)
-        //数据：NativeToFlutter
-        messageChannel.sendMessage(["content":"佩云宝宝很好呀"]) { result in
-            //逆向数据FlutterToNative
-            print("逆向结果result:\(String(describing: result))")
-            self.swiftCustomMothod(des: String(describing: result))
-        }
+        
     }
 
 

@@ -28,6 +28,7 @@ class PageC extends StatefulWidget {
 //(自定义)状态子有态SW插件类 实例(体)
 class _PageCState extends State<PageC> {
   //获取原生所构建出的通道channel(通道名即通道原生对应的名)
+  // BasicMessageChannel(不受页面影响(更自由))
   static const messageChannel = BasicMessageChannel('plugins.flutter.io/google_sign_in_ios', StandardMessageCodec());
   @override
   //状态SW插件子类的本身执行区中重构插件编译build事件实例(系统自动触发)
@@ -70,6 +71,17 @@ class _PageCState extends State<PageC> {
                       elevation: MaterialStateProperty.all(50) //阴影
                       ),
                   child: const Text('阴影按钮'),
+                ),
+                SizedBox(
+                  width: Unity().screenWidth(context),
+                  height: 45,
+                  child: GestureDetector(
+                    onTap: () {
+                      // BoostNavigator.instance.pop(context);
+                      Navigator.of(context).pop();
+                    },
+                    child: const Text(textAlign: TextAlign.center,"回到上级页(普通跳转)"),
+                  ),
                 ),
               ],
             )),

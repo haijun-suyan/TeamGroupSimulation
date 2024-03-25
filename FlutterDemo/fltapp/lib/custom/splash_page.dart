@@ -32,12 +32,6 @@ class _SplashPageState extends State<SplashPage> {
   void initState() {
     super.initState();
     Logger.log('boost-SplashPage $mounted');
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    Logger.log('boost-SplashPage $mounted');
-
     //数据的双向通信
     //----flutter提供IMP-----
     //Event>NativeToFlutter>Native(主动发送)send：首次addEventListener失效
@@ -47,6 +41,23 @@ class _SplashPageState extends State<SplashPage> {
           //接收处理
           return flutterCustomMethod(arguments);
         });
+
+    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
+      Unity().showDialogCustom(context, "NativeToFlutter(Event)",
+          '["content"]["happy"]', () {}, () {});
+    });
+
+  }
+
+  void dispose() {
+    // removeListener.dispose();
+    super.dispose();
+  }
+
+
+  @override
+  Widget build(BuildContext context) {
+    Logger.log('boost-SplashPage $mounted');
 
     return Scaffold(
       appBar: AppBar(

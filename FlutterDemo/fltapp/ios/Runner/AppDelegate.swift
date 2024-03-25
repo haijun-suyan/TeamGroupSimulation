@@ -48,10 +48,11 @@ import Chrysan
 //        FlutterBoost.instance().open(options)
 //        return true
 
-        //MessageChannel 采用Boost消息通道(数据双向传递)
+        //MessageChannel 采用Boost消息通道(数据双向传递)(不受页面影响(更自由))
         //Flutter主动发送(Boost)
-        //双向数据+双向imp操作(推荐优先)
-        let messageChannel: FlutterBasicMessageChannel = FlutterBasicMessageChannel(name: "plugins.flutter.io/google_sign_in_ios", binaryMessenger: fvc.binaryMessenger)
+        //双向数据+双向imp操作(推荐优先(不受页面影响(更自由)))
+        let fc: FBFlutterViewContainer = FBFlutterViewContainer()
+        let messageChannel: FlutterBasicMessageChannel = FlutterBasicMessageChannel(name: "plugins.flutter.io/google_sign_in_ios", binaryMessenger: fc.binaryMessenger)
         //数据：FlutterToNative
         messageChannel.setMessageHandler { message, callback in
             //处理接收到的消息

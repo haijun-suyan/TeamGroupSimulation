@@ -20,7 +20,6 @@ class OtherPage extends StatefulWidget {
 class _OtherPageState extends State<OtherPage> {
   // -----(原生页面实现操作)flutter提供IMP功能(数据的双向通信)-----
   late VoidCallback removeListener;
-  bool isNTFDialog = false;
   Future<dynamic> flutterCustomMethod(Map<dynamic, dynamic> arguments) async {
     //接收处理
     if (kDebugMode) {
@@ -28,8 +27,11 @@ class _OtherPageState extends State<OtherPage> {
     }
 
     //(setState状态写入事件)引用码更改状态环境：执行引用setState的坑回调事件内的回调指令码后重运行同类结构中的编译bulid事件的渲染命令界面渲染的更新
-    setState(() {
-      isNTFDialog = true;
+    // setState(() {});
+
+    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
+      Unity().showDialogCustom(context, "NativeToFlutter(Event)",
+          '["content"]["happy"]', () {}, () {});
     });
 
     return 100;
@@ -40,36 +42,27 @@ class _OtherPageState extends State<OtherPage> {
     super.initState();
     Logger.log('===boost-OtherPage $mounted');
 
-    if (kDebugMode) {
-      Logger.log('===============$isNTFDialog');
-    }
+    //数据的双向通信
+    //----flutter提供IMP-----
+    //Event>NativeToFlutter>Native(主动发送)send：首次addEventListener失效
+    //不推荐
+    removeListener =
+        BoostChannel.instance.addEventListener("otherPage", (key, arguments) {
+          //接收处理
+          return flutterCustomMethod(arguments);
+        });
 
-    if (isNTFDialog) {
+    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
+      Unity().showDialogCustom(context, "NativeToFlutter(Event)",
+          '["content"]["happy"]', () {}, () {});
+    });
 
-      WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
-        Unity().showDialogCustom(context, "NativeToFlutter(Event)",
-            '["content"]["happy"]', () {}, () {});
-      });
-      isNTFDialog = false;
-    }
   }
 
-  void sssss() {
-    super.initState();
-    Logger.log('===boost-OtherPage $mounted');
-
-    if (kDebugMode) {
-      Logger.log('===============$isNTFDialog');
-    }
-
-    if (isNTFDialog) {
-
-      WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
-        Unity().showDialogCustom(context, "NativeToFlutter(Event)",
-            '["content"]["happy"]', () {}, () {});
-      });
-      isNTFDialog = false;
-    }
+  @override
+  void dispose() {
+    // removeListener.dispose();
+    super.dispose();
   }
 
   @override
@@ -79,17 +72,6 @@ class _OtherPageState extends State<OtherPage> {
     if (kDebugMode) {
       print('settings.arguments:${widget.settings.arguments}');
     }
-
-    //数据的双向通信
-    //----flutter提供IMP-----
-    //Event>NativeToFlutter>Native(主动发送)send：首次addEventListener失效
-    //不推荐
-    removeListener =
-        BoostChannel.instance.addEventListener("otherPage", (key, arguments) {
-          //接收处理
-          isNTFDialog = true;
-      return flutterCustomMethod(arguments);
-    });
 
     return Scaffold(
       appBar: AppBar(

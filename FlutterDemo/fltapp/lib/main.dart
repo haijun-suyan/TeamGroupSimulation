@@ -117,6 +117,7 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   //获取原生所构建出的通道channel(通道名即通道原生对应的名)
+  // BasicMessageChannel(不受页面影响(更自由))
   static const messageChannel = BasicMessageChannel('plugins.flutter.io/google_sign_in_ios', StandardMessageCodec());
 
   //   设置与源生跨层交互的flutter页
