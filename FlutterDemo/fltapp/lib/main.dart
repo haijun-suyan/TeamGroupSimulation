@@ -19,6 +19,8 @@ import 'custom/Unity.dart';
 
 import 'custom/splash_page.dart';
 import 'custom/other_page.dart';
+import 'custom/analysisProvide.dart';
+
 
 // flutter_boost
 import 'dart:io';
@@ -119,7 +121,6 @@ class _MyAppState extends State<MyApp> {
   //获取原生所构建出的通道channel(通道名即通道原生对应的名)
   // BasicMessageChannel(不受页面影响(更自由))
   static const messageChannel = BasicMessageChannel('plugins.flutter.io/google_sign_in_ios', StandardMessageCodec());
-
   //   设置与源生跨层交互的flutter页
   // 举例：'splash’和’otherPage’属性对应跳转路径
   // flutter页属性别名
@@ -164,7 +165,12 @@ class _MyAppState extends State<MyApp> {
     'pageD':(settings,uniqueId) {
       return PageRouteBuilder<dynamic>(
           settings: settings,
-          pageBuilder: (context, __, ___) => const PageD(title: 'ListView表视图(flutter页)'));
+          pageBuilder: (context, __, ___) => const PageD(title: 'ListView表视图(flutter页)'));//PageD(title: 'ListView表视图(flutter页)')系统State管理的构造器页实例
+    },
+    'analysisProvide':(settings,uniqueId) {
+      return PageRouteBuilder<dynamic>(
+          settings: settings,
+          pageBuilder: (context, __, ___) => const UIPageOfProvider(title: 'Provider'));//ProviderDemoPage(title: 'Provider')Provider管理的构造器页实例
     }
   };
 

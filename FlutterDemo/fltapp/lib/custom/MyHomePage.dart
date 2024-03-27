@@ -13,6 +13,9 @@ import 'package:english_words/english_words.dart';
 //自定义辅助文件
 import 'package:flutter_boost/flutter_boost.dart';
 
+//State结构：系统本身直接提供的状态结构
+
+
 //内容数据资源
 //(效果屏幕界面)有态SW插件 类(构造器)
 //有态SW插件类
@@ -117,6 +120,17 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                       });
                     },
                     child: const Text('下一页'),
+                  ),
+                  TextButton(
+                    autofocus: true,
+                    onPressed: (){
+                      setState(() {
+                        //正式的触发路由跳转
+                        // Navigator.of(context).pushNamed('/b');
+                        BoostNavigator.instance.push("analysisProvide");
+                      });
+                    },
+                    child: const Text('Provider'),
                   ),
                 ],
               )), //FadeTransition过渡动画呈现插件(其内child对应的插件(默认不可见(当主机controller执行controller.forward();生效命令后child对应的内嵌插件逐步动画呈现)))
