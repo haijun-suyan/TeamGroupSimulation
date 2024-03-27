@@ -69,6 +69,16 @@ class Unity {
     double appBarHeight = MediaQuery.of(context).padding.top;
     return appBarHeight;
   }
+
+  //底部栏高度
+  double bottomBarHeight(BuildContext context) {
+    double bottomBarHeight = MediaQuery.of(context).padding.bottom;
+    return bottomBarHeight;
+  }
+
+
+
+
 }
 
 class CustomDialog extends StatelessWidget {

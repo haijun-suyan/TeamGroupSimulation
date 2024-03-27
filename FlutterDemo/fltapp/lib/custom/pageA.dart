@@ -6,9 +6,12 @@ import 'package:flutter/material.dart';
 //更基本Widget：Widgets集
 import 'dart:async' show Future;
 import 'package:flutter/services.dart' show rootBundle;
+import 'package:flutter_boost/flutter_boost.dart';
 
 //ios样式Widget(某些定制化独特风格)：Cupertino库
 import 'package:transparent_image/transparent_image.dart';
+
+import 'Unity.dart';
 //自定义Widget文件(库)
 
 //自定义辅助文件
@@ -60,6 +63,7 @@ class _PageAState extends State<PageA> {
       body: Center(
         child: Container(
           color: Colors.blue,
+          margin:const EdgeInsets.only(top: 0),
           child: SingleChildScrollView(
             scrollDirection: Axis.vertical,
             padding: const EdgeInsets.only(left: 50, right: 50), //边际填充(内缩)(非负)
@@ -104,7 +108,8 @@ class _PageAState extends State<PageA> {
     //(setState状态写入事件)引用码更改状态环境：执行引用setState的坑回调事件内的回调指令码后重运行同类结构中的编译bulid事件的渲染命令界面渲染的更新
     setState(() {
       //正式的执行路由跳转
-      Navigator.of(context).pushNamed('/b');
+      // Navigator.of(context).pushNamed('/b');
+      BoostNavigator.instance.push("pageB");
     });
   }
 }
@@ -124,84 +129,90 @@ class CustomCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      child: SingleChildScrollView(
-        scrollDirection: Axis.vertical,
-        padding: const EdgeInsets.only(left: 50, right: 50), //边际填充(内缩)(非负)
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Container(
-              width: 200,
-              height: 150,
-              color: Colors.yellow,
-              child: const Image(
-                image: AssetImage(
-                    'lib/src/images/a_dot_burr/a_dot_burr.png'), //加载本地资源图
-                fit: BoxFit.fill,
-              ),
-            ),
-            Container(
-              width: 300,
-              height: 200,
-              color: Colors.yellow,
-              child: const Image(
-                image: AssetImage(
-                    'lib/src/images/a_dot_burr/a_dot_burr.png'), //加载本地资源图
-                fit: BoxFit.fill,
-              ),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Container(
-                  width: 100,
-                  height: 100,
-                  color: Colors.yellow,
-                  child: Image.asset(
-                      'lib/src/assets/dark_cycle/dark_cycle.png'), //加载本地资源图
+      child: Container(
+        margin:const EdgeInsets.only(top: 0),
+        width: Unity().screenWidth(context),
+        height: Unity().screenHeight(context)-Unity().appBarHeight(context)-Unity().bottomBarHeight(context)-300,
+        color: Colors.yellow,
+        child: SingleChildScrollView(
+          scrollDirection: Axis.vertical,
+          padding: const EdgeInsets.only(left: 50, top: 50,right: 50,bottom:50), //边际填充(内缩)(非负)
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Container(
+                width: Unity().screenWidth(context),
+                height: 150,
+                color: Colors.yellow,
+                child: const Image(
+                  image: AssetImage(
+                      'lib/src/images/a_dot_burr/a_dot_burr.png'), //加载本地资源图
+                  fit: BoxFit.fill,
                 ),
-                Container(
-                  width: 100,
-                  height: 100,
-                  color: Colors.yellow,
-                  child: const Image(
-                    image: AssetImage(
-                        'lib/src/assets/lover_kiss.png.dataset/lover_kiss.png'), //加载本地资源图
-                    fit: BoxFit.fill,
+              ),
+              Container(
+                width: Unity().screenWidth(context),
+                height: 200,
+                color: Colors.yellow,
+                child: const Image(
+                  image: AssetImage(
+                      'lib/src/images/a_dot_burr/a_dot_burr.png'), //加载本地资源图
+                  fit: BoxFit.fill,
+                ),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Container(
+                    width: 80,
+                    height: 100,
+                    color: Colors.yellow,
+                    child: Image.asset(
+                        'lib/src/assets/dark_cycle/dark_cycle.png'), //加载本地资源图
                   ),
-                ),
-              ],
-            ),
-            const Image(
-              image: AssetImage(
-                  'lib/src/images/lovers_cartn/lovers_cartn.png'), //加载本地资源图
-              fit: BoxFit.fill,
-            ),
-            Image.network(
-                'https://img2.baidu.com/it/u=330301312,2796288823&fm=253&fmt=auto&app=138&f=JPEG?w=800&h=500'), //加载网图
-            FadeInImage.assetNetwork(
-              image:
-                  'https://img0.baidu.com/it/u=1162172507,1840715665&fm=253&fmt=auto&app=120&f=JPEG?w=1280&h=800',
-              placeholder: 'lib/src/images/girl_cute/girl_cute.png',
-              fit: BoxFit.fill,
-            ), //加载网图
-            FadeInImage.memoryNetwork(
-              placeholder: kTransparentImage,
-              image:
-                  'http://tiebapic.baidu.com/forum/w%3D580/sign=a96ca741eafaaf5184e381b7bc5594ed/7ea6a61ea8d3fd1f2643ad5d274e251f95ca5f38.jpg',
-            ), //加载网图
-            FadeInImage.assetNetwork(
-              image:
-                  'https://img1.baidu.com/it/u=160173892,1626382670&fm=253&fmt=auto&app=120&f=JPEG?w=1280&h=800',
-              placeholder: 'lib/src/images/girl_cute.png',
-              fit: BoxFit.fill,
-            ), //加载网图
-            FadeInImage.memoryNetwork(
-              placeholder: kTransparentImage,
-              image:
-                  'https://img0.baidu.com/it/u=1435639120,2241364006&fm=253&fmt=auto&app=138&f=JPEG?w=800&h=500',
-            ), //加载网图
-          ],
+                  Container(
+                    width: 80,
+                    height: 100,
+                    color: Colors.yellow,
+                    child: const Image(
+                      image: AssetImage(
+                          'lib/src/assets/lover_kiss.png.dataset/lover_kiss.png'), //加载本地资源图
+                      fit: BoxFit.fill,
+                    ),
+                  ),
+                ],
+              ),
+              const Image(
+                image: AssetImage(
+                    'lib/src/images/lovers_cartn/lovers_cartn.png'), //加载本地资源图
+                fit: BoxFit.fill,
+              ),
+              Image.network(
+                  'https://img2.baidu.com/it/u=330301312,2796288823&fm=253&fmt=auto&app=138&f=JPEG?w=800&h=500'), //加载网图
+              FadeInImage.assetNetwork(
+                image:
+                'https://img0.baidu.com/it/u=1162172507,1840715665&fm=253&fmt=auto&app=120&f=JPEG?w=1280&h=800',
+                placeholder: 'lib/src/assets/dark_cycle/dark_cycle.png',
+                fit: BoxFit.fill,
+              ), //加载网图
+              FadeInImage.memoryNetwork(
+                placeholder: kTransparentImage,
+                image:
+                'http://tiebapic.baidu.com/forum/w%3D580/sign=a96ca741eafaaf5184e381b7bc5594ed/7ea6a61ea8d3fd1f2643ad5d274e251f95ca5f38.jpg',
+              ), //加载网图
+              FadeInImage.assetNetwork(
+                image:
+                'https://img1.baidu.com/it/u=160173892,1626382670&fm=253&fmt=auto&app=120&f=JPEG?w=1280&h=800',
+                placeholder: 'lib/src/assets/dark_cycle/dark_cycle.png',
+                fit: BoxFit.fill,
+              ), //加载网图
+              FadeInImage.memoryNetwork(
+                placeholder: kTransparentImage,
+                image:
+                'https://img0.baidu.com/it/u=1435639120,2241364006&fm=253&fmt=auto&app=138&f=JPEG?w=800&h=500',
+              ), //加载网图
+            ],
+          ),
         ),
       ),
     );
